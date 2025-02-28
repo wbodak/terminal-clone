@@ -1,0 +1,17 @@
+import { SalesPriceDetail } from '../db/SalesPriceDetail'
+import { SalesPriceMaster } from '../db/SalesPriceMaster'
+
+export interface SalesPriceDetailSub {
+  ID: number
+  SALESPRICEDETAILSUB_DETAIL_ID?: number
+  SALESPRICEDETAILSUB_ITEM_ID: number
+  SALESPRICEDETAILSUB_PRICE: number
+  SALESPRICEDETAILSUB_UNIT_ID: number
+  SALESPRICEDETAILSUB_REGDATE: Date
+  SALESPRICEDETAILSUB_REGIP: string
+  SALESPRICEDETAILSUB_REGUSER_ID: number
+  SALESPRICEDETAILSUB_CURRENCY_ID: number
+  SALESPRICEDETAILSUB_MASTER_ID: number
+  SALESPRICEDETAILSUB_DETAIL?: SalesPriceDetail
+  SALESPRICEDETAILSUB_MASTER?: SalesPriceMaster
+}

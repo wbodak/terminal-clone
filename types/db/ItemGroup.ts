@@ -1,0 +1,10 @@
+export interface ItemGroup {
+  ID: number
+  ITEMGROUP_MASTER_ID?: number
+  ITEMGROUP_GROUPMASTER_ID?: number
+  ITEMGROUP_GROUPDETAIL_ID?: number
+  ITEMGROUP_GROUPDEFINITION_ID?: number
+  ITEMGROUP_REGUSER_ID?: number
+  ITEMGROUP_REGDATE?: Date
+  ITEMGROUP_REGIP?: string
+}

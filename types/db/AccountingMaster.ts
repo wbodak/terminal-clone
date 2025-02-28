@@ -1,0 +1,19 @@
+import { AccountingDetail } from '../db/AccountingDetail'
+
+export interface AccountingMaster {
+  ID: number
+  ACCOUNTINGMASTER_CORP_ID: number
+  ACCOUNTINGMASTER_SECTION_ID: number
+  ACCOUNTINGMASTER_DATE: Date
+  ACCOUNTINGMASTER_TYPE_ID: number
+  ACCOUNTINGMASTER_NUMBER: number
+  ACCOUNTINGMASTER_JOURNAL?: number
+  ACCOUNTINGMASTER_CONFIRM: boolean
+  ACCOUNTINGMASTER_LINK?: string
+  ACCOUNTINGMASTER_REF_ID?: number
+  ACCOUNTINGMASTER_REGUSER_ID: number
+  ACCOUNTINGMASTER_REGDATE: Date
+  ACCOUNTINGMASTER_REGIP: string
+  ACCOUNTINGMASTER_ENTERDATE: Date
+  AccountingDetail: AccountingDetail[]
+}

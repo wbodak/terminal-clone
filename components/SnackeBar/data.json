@@ -1,0 +1,240 @@
+[
+    {
+        "type": "success",
+        "name": "Dlg_SuccessSave",
+        "language": "Turkce",
+        "title": "Başarılı",
+        "message": "Kayıt başarılı bir şekilde yapılmıştır."
+    },
+    {
+        "type": "success",
+        "name": "Dlg_Success",
+        "language": "Turkce",
+        "title": "Başarılı",
+        "message": "İşlem başarılı bir şekilde gerçekleşti."
+    },
+    {
+        "type": "question",
+        "name": "Dlg_QuestionDelete",
+        "language": "Turkce",
+        "title": "Kayıt Sil",
+        "message": "Kayıt Silinecek Emin Misiniz?"
+    },
+    {
+        "type": "error",
+        "name": "Dlg_ErrorProcess",
+        "language": "Turkce",
+        "title": "İşlem Hatası",
+        "message": "İşlem sırasında hata oluştu."
+    },
+    {
+        "type": "error",
+        "name": "Dlg_ErrorQuantity",
+        "language": "Turkce",
+        "title": "Miktar Hatası",
+        "message": "Geçersiz miktar."
+    },
+    {
+        "type": "success",
+        "name": "Dlg_SuccessProcess",
+        "language": "Turkce",
+        "title": "İşlem Başarılı",
+        "message": "İşlem başarılı bir şekilde yapılmıştır."
+    },
+    {
+        "type": "error",
+        "name": "Dlg_ErrorNull",
+        "language": "Turkce",
+        "title": "Eksik Veri",
+        "message": "Eksik veri girişi. Lütfen kontrol ediniz."
+    },
+    {
+        "type": "error",
+        "name": "Dlg_ErrorMasterSave",
+        "language": "Turkce",
+        "title": "Master Hatası",
+        "message": "Lütfen önce master kaydınızı gerçekleştiriniz."
+    },
+    {
+        "type": "error",
+        "name": "Dlg_ErrorSave",
+        "language": "Turkce",
+        "title": "Kayıt Hatası",
+        "message": "Lütfen önce kaydınızı gerçekleştiriniz."
+    },
+    {
+        "type": "error",
+        "name": "Dlg_ErrorDataNull",
+        "language": "Turkce",
+        "title": "Veri Yok",
+        "message": "Veri bulunamadı."
+    },
+    {
+        "type": "error",
+        "name": "Dlg_ErrorNotSelected",
+        "language": "Turkce",
+        "title": "Seçim Hatası",
+        "message": "Lütfen önce bir seçim yapınız."
+    },
+    {
+        "type": "error",
+        "name": "Dlg_ErrorNotUpper",
+        "language": "Turkce",
+        "title": "Numara Hatası",
+        "message": "Lütfen geçerli bir numara girin."
+    },
+    {
+        "type": "error",
+        "name": "Dlg_ErrorNotAllowed",
+        "language": "Turkce",
+        "title": "Erişim İzni",
+        "message": "Giriş Hakkınız Bulunmamaktadır."
+    },
+    {
+        "type": "error",
+        "name": "Dlg_ErrorModuleControl",
+        "language": "Turkce",
+        "title": "Gün Sonu",
+        "message": "Gün sonu yapılmış, işleme devam edilemez!"
+    },
+    {
+        "type": "error",
+        "name": "Dlg_ErrorDiscount",
+        "language": "Turkce",
+        "title": "İskonto Hatası",
+        "message": "Lütfen önce tutar giriniz."
+    },
+    {
+        "type": "question",
+        "name": "Dlg_QuestionChangeType",
+        "language": "Turkce",
+        "title": "Emin misiniz?",
+        "message": "Kayıtlı gruplar silinecek ve yeni numara atanacak, emin misiniz?"
+    },
+    {
+        "type": "question",
+        "name": "Dlg_QuestionFavoriteMenu",
+        "language": "Turkce",
+        "title": "Emin Misiniz?",
+        "message": "Sık kullanılanlara eklemek istediğinize emin misiniz?"
+    },
+    {
+        "type": "error",
+        "name": "Dlg_ErrorAgainSave",
+        "language": "Turkce",
+        "title": "Tekrar Kayıt Hatası",
+        "message": "Kaydınız zaten bulunmaktadır."
+    },
+    {
+        "type": "error",
+        "name": "Dlg_ErrorPasswordAgain",
+        "language": "Turkce",
+        "title": "Şifreniz Uyumsuz",
+        "message": "Şifreniz uyumsuz lütfen kontrol ediniz."
+    },
+    {
+        "type": "error",
+        "name": "Dlg_ErrorNotSerial",
+        "language": "Turkce",
+        "title": "Seri Hatası",
+        "message": "Lütfen önce bir seri giriniz."
+    },
+    {
+        "type": "question",
+        "name": "Dlg_PaymentDayChange",
+        "language": "Turkce",
+        "title": "Ödeme Günü Güncelleme",
+        "message": "Ödeme gününü değiştirdiğinizde siparişlerinizin fiyatları da güncellenecektir. Ödeme gününü değiştirmek istediğinize emin misiniz?"
+    },
+    {
+        "type": "error",
+        "name": "Dlg_ErrorUpper",
+        "language": "Turkce",
+        "title": "Üst Hesap Hatası",
+        "message": "Seçtiğiniz hesabın alt hesabı bulunmaktadır."
+    },
+    {
+        "type": "error",
+        "name": "Dlg_ErrorOutlet",
+        "language": "Turkce",
+        "title": "Satın Alınamaz Ürün",
+        "message": "Seçtiğiniz ürün outlet olduğundan dolayı satın alamazsınız."
+    },
+    {
+        "type": "question",
+        "name": "Dlg_AreYouSure",
+        "language": "Turkce",
+        "title": "Emin misiniz?",
+        "message": "İşleme devam etmek istiyor musunuz?"
+    },
+    {
+        "type": "question",
+        "name": "Dlg_CreateEInvoice",
+        "language": "Turkce",
+        "title": "Emin misiniz?",
+        "message": "Seçilenlerin E-Fatura'sı oluşturulacaktır."
+    },
+    {
+        "type": "question",
+        "name": "Dlg_CreateEWaybill",
+        "language": "Turkce",
+        "title": "Emin misiniz?",
+        "message": "Seçilenlerin E-İrsaliye'si' oluşturulacaktır."
+    },
+    {
+        "type": "question",
+        "name": "Dlg_PortalDelete",
+        "language": "Turkce",
+        "title": "Emin misiniz?",
+        "message": "Seçilenler Portal'dan silinecektir."
+    },
+    {
+        "type": "question",
+        "name": "Dlg_GutypeDelete",
+        "language": "Turkce",
+        "title": "Emin misiniz?",
+        "message": "Seçilenlerin GUtype'i kaldırılacaktır."
+    },
+    {
+        "type": "question",
+        "name": "Dlg_ItemPrice",
+        "language": "Turkce",
+        "title": "Emin misiniz?",
+        "message": "Fiyat değişikliği sadece bulunduğunuz sayfadaki ürünlerde uygulanacaktır."
+    },
+    {
+        "type": "question",
+        "name": "Dlg_QuestionShareRate",
+        "language": "Turkce",
+        "title": "Hesaplansın Mı?",
+        "message": "Paylaşım oranları güncellendi, Prim hesaplaması yentypeen yapılsın mı?"
+    },
+    {
+        "type": "question",
+        "name": "Dlg_QuestionDeleteTarget",
+        "language": "Turkce",
+        "title": "Silinsin mi?",
+        "message": "Kayıtlar temizlenecek emin misiniz?"
+    },
+    {
+        "type": "question",
+        "name": "Dlg_QuestionInsertTarget",
+        "language": "Turkce",
+        "title": "Emin misiniz?",
+        "message": "Varolan kayıtlar silinecek ve yeni kayıtlar eklenecek."
+    },
+    {
+        "type": "question",
+        "name": "Dlg_QuestionUpdateTarget",
+        "language": "Turkce",
+        "title": "Emin misiniz?",
+        "message": "Tüm hesaplamalar yentypeen yapılacak."
+    },
+    {
+        "type": "question",
+        "name": "Dlg_QuestionCreateSales",
+        "language": "Turkce",
+        "title": "Kaydı görmek ister misiniz?",
+        "message": "Bu siparişe ait bir satış fişi zaten oluşturulmuş."
+    }
+]

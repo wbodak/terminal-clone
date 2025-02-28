@@ -1,0 +1,9 @@
+export interface V_DimensionDetail {
+  ID: number
+  DIMENSIONDETAIL_CORP_ID?: number
+  DIMENSIONDETAIL_MASTER_ID?: number
+  DIMENSIONDETAIL_CODE?: string
+  DIMENSIONDETAIL_NAME?: string
+  DIMENSIONDETAIL_TYPE_ID?: number
+  DIMENSIONDETAIL_GROUPNAME?: string
+}

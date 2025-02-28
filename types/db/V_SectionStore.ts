@@ -1,0 +1,10 @@
+export interface V_SectionStore {
+  ID: number
+  SECTIONSTORE_REGUSER_ID: number
+  SECTIONSTORE_REGDATE: Date
+  SECTIONSTORE_REGIP: string
+  SECTIONSTORE_SECTION_ID: number
+  SECTIONSTORE_STORE_ID: number
+  SECTIONSTORE_STORECODE?: string
+  SECTIONSTORE_STORENAME?: string
+}

@@ -1,0 +1,58 @@
+import { Bolster } from '../db/Bolster'
+import { Profile } from '../db/Profile'
+import { MoldMaintenance } from '../db/MoldMaintenance'
+import { MoldDetail } from '../db/MoldDetail'
+import { MoldPress } from '../db/MoldPress'
+import { ProductionMold } from '../db/ProductionMold'
+import { ProductionProgDetail } from '../db/ProductionProgDetail'
+
+export interface Mold {
+  ID: number
+  MOLD_REGUSER_ID: number
+  MOLD_REGIP: string
+  MOLD_REGDATE: Date
+  MOLD_PROFILE_ID: number
+  MOLD_NUMBER: string
+  MOLD_PICWEIGTH: number
+  MOLD_MAXWEIGTH: number
+  MOLD_WEIGTH: number
+  MOLD_FIGURECOUNT?: number
+  MOLD_DIAMETER: number
+  MOLD_MEASURE: number
+  MOLD_FRONTCHAMBER?: string
+  MOLD_BACK?: string
+  MOLD_AREA: number
+  MOLD_PERIMETER: number
+  MOLD_PAINTEDSURFACE: number
+  MOLD_ANODIZEDSURFACE: number
+  MOLD_RACK?: string
+  MOLD_FACTOR?: number
+  MOLD_MANUFACTURER_ID?: number
+  MOLD_PRODUCTIONDATE?: Date
+  MOLD_CANCELDATE?: Date
+  MOLD_CANCEL_ID?: number
+  MOLD_STATE_ID?: number
+  MOLD_DESCRIPTION?: string
+  MOLD_CANCEL: boolean
+  MOLD_GRAMMAGECONTROL: boolean
+  MOLD_TRANSFERDATE?: Date
+  MOLD_BOLSTER_ID?: number
+  MOLD_BOLSTER2_ID?: number
+  MOLD_CORP_ID: number
+  MOLD_TYPE_ID: number
+  MOLD_BACKPART?: string
+  MOLD_TRANSFERWEIGTH?: number
+  MOLD_TRANSFERMETER?: number
+  MOLD_TRANSFERTENIFER: number
+  MOLD_TOTALWEIGTH?: number
+  MOLD_TOTALMETER?: number
+  MOLD_TOTALTENIFER: number
+  MOLD_BOLSTER?: Bolster
+  MOLD_BOLSTER2?: Bolster
+  MOLD_PROFILE?: Profile
+  MOLD_TYPE?: MoldMaintenance
+  MoldDetail: MoldDetail[]
+  MoldPress: MoldPress[]
+  ProductionMold: ProductionMold[]
+  ProductionProgDetail: ProductionProgDetail[]
+}

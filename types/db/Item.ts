@@ -1,0 +1,75 @@
+import { Corporation } from '../db/Corporation'
+import { Calendar } from '../db/Calendar'
+import { ItemAccount } from '../db/ItemAccount'
+import { ItemCorp } from '../db/ItemCorp'
+import { ItemStockControl } from '../db/ItemStockControl'
+import { ItemUnit } from '../db/ItemUnit'
+import { MaterialAnalysis } from '../db/MaterialAnalysis'
+import { ProductionProgDetail } from '../db/ProductionProgDetail'
+
+export interface Item {
+  ID: number
+  ITEM_REGUSER_ID: number
+  ITEM_REGDATE: Date
+  ITEM_REGIP: string
+  ITEM_CORP_ID: number
+  ITEM_NUMBER: string
+  ITEM_REFNO?: string
+  ITEM_TYPE_ID: number
+  ITEM_NAME: string
+  ITEM_DESCRIPTION?: string
+  ITEM_COMMERCIALNAME?: string
+  ITEM_FOREIGNNAME?: string
+  ITEM_UNIT_ID: number
+  ITEM_VAT_ID?: number
+  ITEM_MINSTOCK?: number
+  ITEM_MAXSTOCK?: number
+  ITEM_CRITICALSTOK?: number
+  ITEM_MINORDER?: number
+  ITEM_LOTTRACKING: boolean
+  ITEM_QUALITYCONTROL: boolean
+  ITEM_PASSIVE: boolean
+  ITEM_SUPPLYDAY?: number
+  ITEM_BUDGET: boolean
+  ITEM_UNSOLD: boolean
+  ITEM_OWNER_ID?: number
+  ITEM_PRODUCTIONSECTION_ID?: number
+  ITEM_ENTRYDATE: Date
+  ITEM_PRIVATECODE1?: string
+  ITEM_PRIVATECODE2?: string
+  ITEM_PRIVATECODE3?: string
+  ITEM_PRIVATECODE4?: string
+  ITEM_PRIVATECODE5?: string
+  ITEM_VATFREE: boolean
+  ITEM_GTYPE?: string
+  ITEM_PURCHASEUNIT_ID?: number
+  ITEM_PURCHASEUNITRATE?: number
+  ITEM_ECOMMERCE: boolean
+  ITEM_GROUP1_ID?: number
+  ITEM_GROUP2_ID?: number
+  ITEM_GROUP3_ID?: number
+  ITEM_GROUP4_ID?: number
+  ITEM_GROUP5_ID?: number
+  ITEM_GROUP6_ID?: number
+  ITEM_GROUP7_ID?: number
+  ITEM_GROUP8_ID?: number
+  ITEM_GROUP9_ID?: number
+  ITEM_GROUP10_ID?: number
+  ITEM_COLORTYPE_ID?: number
+  ITEM_GROUP11_ID?: number
+  ITEM_GROUP12_ID?: number
+  ITEM_ISPROFILE: boolean
+  ITEM_DIAMETER?: number
+  ITEM_DIAMETERTRACKING: boolean
+  ITEM_PIECETRACKING: boolean
+  ITEM_LENGTHTRACKING: boolean
+  ITEM_SINGLEBARCODE: boolean
+  ITEM_CORP?: Corporation
+  Calendar: Calendar[]
+  ItemAccount: ItemAccount[]
+  ItemCorp: ItemCorp[]
+  ItemStockControl: ItemStockControl[]
+  ItemUnit: ItemUnit[]
+  MaterialAnalysis: MaterialAnalysis[]
+  ProductionProgDetail: ProductionProgDetail[]
+}

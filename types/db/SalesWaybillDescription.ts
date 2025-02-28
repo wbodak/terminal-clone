@@ -1,0 +1,11 @@
+import { SalesWaybillMaster } from '../db/SalesWaybillMaster'
+
+export interface SalesWaybillDescription {
+  ID: number
+  SALESWAYBILLDESCRIPTION_MASTER_ID: number
+  SALESWAYBILLDESCRIPTION_DESCRIPTION: string
+  SALESWAYBILLDESCRIPTION_REGUSER_ID: number
+  SALESWAYBILLDESCRIPTION_REGDATE: Date
+  SALESWAYBILLDESCRIPTION_REGIP: string
+  SALESWAYBILLDESCRIPTION_MASTER?: SalesWaybillMaster
+}

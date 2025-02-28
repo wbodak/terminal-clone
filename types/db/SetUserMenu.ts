@@ -1,0 +1,8 @@
+export interface SetUserMenu {
+  ID: number
+  SETUSERMENU_USER_ID: number
+  SETUSERMENU_SETMENUDETAIL_ID: number
+  SETUSERMENU_REGUSER_ID: number
+  SETUSERMENU_REGDATE: Date
+  SETUSERMENU_REGIP: string
+}

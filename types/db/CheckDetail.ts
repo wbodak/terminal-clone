@@ -1,0 +1,23 @@
+import { CheckDefinition } from '../db/CheckDefinition'
+import { CheckMaster } from '../db/CheckMaster'
+
+export interface CheckDetail {
+  ID: number
+  CHECKDETAIL_DEFINITION_ID: number
+  CHECKDETAIL_MASTER_ID: number
+  CHECKDETAIL_AMOUNT: number
+  CHECKDETAIL_MOVE_ID: number
+  CHECKDETAIL_OMOVE_ID: number
+  CHECKDETAIL_OCURRENTACCOUNT_ID: number
+  CHECKDETAIL_OMOVEDATE: Date
+  CHECKDETAIL_SUBACCOUNT_ID: number
+  CHECKDETAIL_CURRENTACCOUNT_ID: number
+  CHECKDETAIL_REGUSER_ID: number
+  CHECKDETAIL_REGDATE: Date
+  CHECKDETAIL_REGIP: string
+  CHECKDETAIL_OPRCURRENCY_ID?: number
+  CHECKDETAIL_OPRAMOUNT: number
+  CHECKDETAIL_OPRCURRENCYRATE: number
+  CHECKDETAIL_DEFINITION?: CheckDefinition
+  CHECKDETAIL_MASTER?: CheckMaster
+}

@@ -1,0 +1,12 @@
+import { ParameterDetail } from '../db/ParameterDetail'
+
+export interface SetPermissionMaster {
+  ID: number
+  SETPERMISSIONMASTER_REGUSER_ID: number
+  SETPERMISSIONMASTER_REGDATE: Date
+  SETPERMISSIONMASTER_REGIP: string
+  SETPERMISSIONMASTER_USERGROUP_ID: number
+  SETPERMISSIONMASTER_DETAIL_ID: number
+  SETPERMISSIONMASTER_TYPE: number
+  SETPERMISSIONMASTER_USERGROUP?: ParameterDetail
+}

@@ -1,0 +1,13 @@
+export interface ModuleFiles {
+  ID: number
+  MODULEFILES_LINK?: string
+  MODULEFILES_REF_ID?: number
+  MODULEFILES_GUID?: string
+  MODULEFILES_DESCRIPTION?: string
+  MODULEFILES_REGUSER_ID?: number
+  MODULEFILES_REGDATE?: Date
+  MODULEFILES_REGIP?: string
+  MODULEFILES_CONTROL?: boolean
+  MODULEFILES_PASSIVE?: boolean
+  MODULEFILES_SHARED?: boolean
+}

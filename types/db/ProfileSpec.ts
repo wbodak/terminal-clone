@@ -1,0 +1,17 @@
+import { Profile } from '../db/Profile'
+
+export interface ProfileSpec {
+  ID: number
+  PROFILESPEC_GROUP_ID: number
+  PROFILESPEC_TYPE_ID: number
+  PROFILESPEC_UNIT_ID: number
+  PROFILESPEC_REF: string
+  PROFILESPEC_NOMINAL: number
+  PROFILESPEC_TOPTOLERANCE: number
+  PROFILESPEC_LOWTOLERANCE: number
+  PROFILESPEC_PROFILE_ID: number
+  PROFILESPEC_REGDATE: Date
+  PROFILESPEC_REGIP: string
+  PROFILESPEC_REGUSER_ID: number
+  PROFILESPEC_PROFILE?: Profile
+}

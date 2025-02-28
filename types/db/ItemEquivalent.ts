@@ -1,0 +1,8 @@
+export interface ItemEquivalent {
+  ID: number
+  ITEMEQUIVALENT_ITEM_ID?: number
+  ITEMEQUIVALENT_EQUIVALENTITEM_ID?: number
+  ITEMEQUIVALENT_REGUSER_ID?: number
+  ITEMEQUIVALENT_REGDATE?: Date
+  ITEMEQUIVALENT_REGIP?: string
+}

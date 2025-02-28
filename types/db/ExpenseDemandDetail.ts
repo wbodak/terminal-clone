@@ -1,0 +1,26 @@
+import { ExpensePlan } from '../db/ExpensePlan'
+import { ExpenseDemandMaster } from '../db/ExpenseDemandMaster'
+import { ExpenseDetail } from '../db/ExpenseDetail'
+
+export interface ExpenseDemandDetail {
+  ID: number
+  EXPENSEDEMANDDETAIL_MASTER_ID: number
+  EXPENSEDEMANDDETAIL_QUANTITY: number
+  EXPENSEDEMANDDETAIL_UNIT_ID: number
+  EXPENSEDEMANDDETAIL_EXPENSE_ID: number
+  EXPENSEDEMANDDETAIL_DESCRIPTION?: string
+  EXPENSEDEMANDDETAIL_COMPANY_ID?: number
+  EXPENSEDEMANDDETAIL_REGUSER_ID: number
+  EXPENSEDEMANDDETAIL_REGDATE: Date
+  EXPENSEDEMANDDETAIL_REGIP: string
+  EXPENSEDEMANDDETAIL_PRICE?: number
+  EXPENSEDEMANDDETAIL_CURRENCY_ID?: number
+  EXPENSEDEMANDDETAIL_CLOSED: boolean
+  EXPENSEDEMANDDETAIL_PARAM1_ID?: number
+  EXPENSEDEMANDDETAIL_PARAM2_ID?: number
+  EXPENSEDEMANDDETAIL_PARAM3_ID?: number
+  EXPENSEDEMANDDETAIL_PARAM4_ID?: number
+  EXPENSEDEMANDDETAIL_EXPENSE?: ExpensePlan
+  EXPENSEDEMANDDETAIL_MASTER?: ExpenseDemandMaster
+  ExpenseDetail: ExpenseDetail[]
+}

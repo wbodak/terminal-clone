@@ -1,0 +1,18 @@
+import { SetMenuMaster } from '../db/SetMenuMaster'
+
+export interface SetMenuDetail {
+  ID: number
+  SETMENUDETAIL_MASTER_ID: number
+  SETMENUDETAIL_TITLE: string
+  SETMENUDETAIL_HIDDEN: boolean
+  SETMENUDETAIL_ORDER: number
+  SETMENUDETAIL_REGUSER_ID: number
+  SETMENUDETAIL_REGDATE: Date
+  SETMENUDETAIL_REGIP: string
+  SETMENUDETAIL_PASSIVE: boolean
+  SETMENUDETAIL_PATH: string
+  SETMENUDETAIL_ISREPORT: boolean
+  SETMENUDETAIL_CATEGORY?: string
+  SETMENUDETAIL_CATEGORYORDER: number
+  SETMENUDETAIL_MASTER?: SetMenuMaster
+}

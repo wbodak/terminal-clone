@@ -1,0 +1,11 @@
+import { PurchaseOrderMaster } from '../db/PurchaseOrderMaster'
+
+export interface PurchaseOrderDescription {
+  ID: number
+  PURCHASEORDERDESCRIPTION_MASTER_ID: number
+  PURCHASEORDERDESCRIPTION_DESCRIPTION: string
+  PURCHASEORDERDESCRIPTION_REGUSER_ID: number
+  PURCHASEORDERDESCRIPTION_REGDATE: Date
+  PURCHASEORDERDESCRIPTION_REGIP: string
+  PURCHASEORDERDESCRIPTION_MASTER?: PurchaseOrderMaster
+}

@@ -1,0 +1,8 @@
+export interface SetUserSection {
+  ID: number
+  SETUSERSECTION_USER_ID?: number
+  SETUSERSECTION_SECTION_ID?: number
+  SETUSERSECTION_REGUSER_ID?: number
+  SETUSERSECTION_REGDATE?: Date
+  SETUSERSECTION_REGIP?: string
+}

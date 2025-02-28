@@ -1,0 +1,9 @@
+export interface ItemProperty {
+  ID: number
+  ITEMPROPERTY_REGUSER_ID?: number
+  ITEMPROPERTY_REGDATE?: Date
+  ITEMPROPERTY_REGIP?: string
+  ITEMPROPERTY_ITEM_ID?: number
+  ITEMPROPERTY_PROPERTY_ID?: number
+  ITEMPROPERTY_DESCRIPTION?: string
+}

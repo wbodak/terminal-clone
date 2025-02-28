@@ -1,0 +1,7 @@
+export interface UserReportParameter {
+  ID: number
+  USERREPORTPARAMETER_KEY: string
+  USERREPORTPARAMETER_VALUE?: string
+  USERREPORTPARAMETER_REPORT_ID: number
+  USERREPORTPARAMETER_USER_ID: number
+}

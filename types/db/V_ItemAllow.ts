@@ -1,0 +1,12 @@
+export interface V_ItemAllow {
+  ID: number
+  ITEMALLOW_ITEM_ID?: number
+  ITEMALLOW_PANUMBER?: string
+  ITEMALLOW_PASTARTDATE?: Date
+  ITEMALLOW_PAENDDATE?: Date
+  ITEMALLOW_HEALTHDESCRIPTOIN?: string
+  ITEMALLOW_ACTIVE?: boolean
+  ITEMALLOW_REGUSER_ID?: number
+  ITEMALLOW_REGDATE?: Date
+  ITEMALLOW_REGIP?: string
+}

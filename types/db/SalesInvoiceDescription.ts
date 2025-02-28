@@ -1,0 +1,11 @@
+import { SalesInvoiceMaster } from '../db/SalesInvoiceMaster'
+
+export interface SalesInvoiceDescription {
+  ID: number
+  SALESINVOICEDESCRIPTION_MASTER_ID: number
+  SALESINVOICEDESCRIPTION_DESCRIPTION: string
+  SALESINVOICEDESCRIPTION_REGUSER_ID: number
+  SALESINVOICEDESCRIPTION_REGDATE: Date
+  SALESINVOICEDESCRIPTION_REGIP: string
+  SALESINVOICEDESCRIPTION_MASTER?: SalesInvoiceMaster
+}

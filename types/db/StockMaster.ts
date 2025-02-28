@@ -1,0 +1,33 @@
+import { PurchaseReturnMaster } from '../db/PurchaseReturnMaster'
+import { SalesWaybillMaster } from '../db/SalesWaybillMaster'
+import { StockDetail } from '../db/StockDetail'
+
+export interface StockMaster {
+  ID: number
+  STOCKMASTER_CORP_ID: number
+  STOCKMASTER_SECTION_ID: number
+  STOCKMASTER_YEAR: number
+  STOCKMASTER_TYPE_ID: number
+  STOCKMASTER_SERIAL_ID: number
+  STOCKMASTER_NUMBER: number
+  STOCKMASTER_DATE: Date
+  STOCKMASTER_COMPANY_ID?: number
+  STOCKMASTER_DOCUMENTSERIAL?: string
+  STOCKMASTER_DOCUMENTNUMBER?: string
+  STOCKMASTER_DOCUMENTDATE?: Date
+  STOCKMASTER_LINK?: string
+  STOCKMASTER_REF_ID?: number
+  STOCKMASTER_SALESWAYBILLMASTER_ID?: number
+  STOCKMASTER_SOURCESSTORE_ID?: number
+  STOCKMASTER_TARGETSTORE_ID?: number
+  STOCKMASTER_CONFIRM: boolean
+  STOCKMASTER_DESCRIPTION?: string
+  STOCKMASTER_REGUSER_ID: number
+  STOCKMASTER_REGDATE: Date
+  STOCKMASTER_REGIP: string
+  STOCKMASTER_PURCHASERETURNMASTER_ID?: number
+  STOCKMASTER_STORECONFIRM: boolean
+  STOCKMASTER_PURCHASERETURNMASTER?: PurchaseReturnMaster
+  STOCKMASTER_SALESWAYBILLMASTER?: SalesWaybillMaster
+  StockDetail: StockDetail[]
+}

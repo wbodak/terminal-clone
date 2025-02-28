@@ -1,0 +1,13 @@
+import { PurchaseDetail } from '../db/PurchaseDetail'
+
+export interface PurchaseDetailSub {
+  ID: number
+  PURCHASEDETAILSUB_DETAIL_ID: number
+  PURCHASEDETAILSUB_PACKINGPCS: number
+  PURCHASEDETAILSUB_REGDATE: Date
+  PURCHASEDETAILSUB_REGIP: string
+  PURCHASEDETAILSUB_REGUSER_ID: number
+  PURCHASEDETAILSUB_BARCODE_ID: number
+  PURCHASEDETAILSUB_PACKINGQUANTITY: number
+  PURCHASEDETAILSUB_DETAIL?: PurchaseDetail
+}

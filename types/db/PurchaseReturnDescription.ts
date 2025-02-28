@@ -1,0 +1,11 @@
+import { PurchaseReturnMaster } from '../db/PurchaseReturnMaster'
+
+export interface PurchaseReturnDescription {
+  ID: number
+  PURCHASERETURNDESCRIPTION_MASTER_ID: number
+  PURCHASERETURNDESCRIPTION_DESCRIPTION: string
+  PURCHASERETURNDESCRIPTION_REGUSER_ID: number
+  PURCHASERETURNDESCRIPTION_REGDATE: Date
+  PURCHASERETURNDESCRIPTION_REGIP: string
+  PURCHASERETURNDESCRIPTION_MASTER?: PurchaseReturnMaster
+}

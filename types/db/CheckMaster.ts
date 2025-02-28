@@ -1,0 +1,47 @@
+import { CurrentAccountPlan } from '../db/CurrentAccountPlan'
+import { Corporation } from '../db/Corporation'
+import { CheckDefinition } from '../db/CheckDefinition'
+import { CheckDetail } from '../db/CheckDetail'
+
+export interface CheckMaster {
+  ID: number
+  CHECKMASTER_DEFINITION_ID: number
+  CHECKMASTER_CORP_ID: number
+  CHECKMASTER_TYPE_ID: number
+  CHECKMASTER_NUMBER: number
+  CHECKMASTER_SERIAL_ID: number
+  CHECKMASTER_YEAR: number
+  CHECKMASTER_OWNER_ID: number
+  CHECKMASTER_PAYDATE: Date
+  CHECKMASTER_BANK_ID?: number
+  CHECKMASTER_BANKCHECKNO?: string
+  CHECKMASTER_MOVE_ID: number
+  CHECKMASTER_CURRENTACCOUNT_ID: number
+  CHECKMASTER_MOVEDATE: Date
+  CHECKMASTER_STATUS_ID: number
+  CHECKMASTER_AMOUNT: number
+  CHECKMASTER_CURRENCY_ID?: number
+  CHECKMASTER_CURRENCYAMOUNT: number
+  CHECKMASTER_DEBTOR: string
+  CHECKMASTER_SECTION?: string
+  CHECKMASTER_CITY_ID?: number
+  CHECKMASTER_BANKACCNO?: string
+  CHECKMASTER_TAXNO?: string
+  CHECKMASTER_PAYMENTPLACE?: string
+  CHECKMASTER_CURRENCYRATE: number
+  CHECKMASTER_SUBACCOUNT_ID: number
+  CHECKMASTER_SETDATE?: Date
+  CHECKMASTER_REGUSER_ID: number
+  CHECKMASTER_REGDATE: Date
+  CHECKMASTER_REGIP: string
+  CHECKMASTER_OPRCURRENCY_ID?: number
+  CHECKMASTER_OPRAMOUNT: number
+  CHECKMASTER_BANKACCOUNT_ID?: number
+  CHECKMASTER_OPRCURRENCYRATE: number
+  CHECKMASTER_BANKACCOUNT?: CurrentAccountPlan
+  CHECKMASTER_CORP?: Corporation
+  CHECKMASTER_CURRENTACCOUNT?: CurrentAccountPlan
+  CHECKMASTER_DEFINITION?: CheckDefinition
+  CHECKMASTER_OWNER?: CurrentAccountPlan
+  CheckDetail: CheckDetail[]
+}

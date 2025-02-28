@@ -1,0 +1,20 @@
+import { Company } from '../db/Company'
+
+export interface CompanyRisk {
+  ID: number
+  COMPANYRISK_CORP_ID: number
+  COMPANYRISK_COMPANY_ID: number
+  COMPANYRISK_DATE: Date
+  COMPANYRISK_NUMBER: number
+  COMPANYRISK_QUOTA: number
+  COMPANYRISK_CURRENCY_ID?: number
+  COMPANYRISK_CLOSED: boolean
+  COMPANYRISK_ENDDATE: Date
+  COMPANYRISK_REGUSER_ID: number
+  COMPANYRISK_REGDATE: Date
+  COMPANYRISK_REGIP: string
+  COMPANYRISK_CLOSEDDATE?: Date
+  COMPANYRISK_DESCRIPTION?: string
+  COMPANYRISK_QUOTA2: number
+  COMPANYRISK_COMPANY?: Company
+}

@@ -1,0 +1,10 @@
+export interface BomSpecContent {
+  ID: number
+  BOMSPECCONTENT_MASTER_ID?: number
+  BOMSPECCONTENT_LANGUAGE_ID?: number
+  BOMSPECCONTENT_DESCRIPTION?: string
+  BOMSPECCONTENT_ALERGION?: string
+  BOMSPEC_REGUSER_ID?: number
+  BOMSPEC_REGDATE?: Date
+  BOMSPEC_REGIP?: string
+}

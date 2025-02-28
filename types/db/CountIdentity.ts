@@ -1,0 +1,10 @@
+export interface CountIdentity {
+  ID: number
+  COUNTIDENTITY_BARCODE?: string
+  COUNTIDENTITY_QUANTITY?: number
+  COUNTIDENTITY_REGDATE?: Date
+  COUNTIDENTITY_DATE?: Date
+  COUNTIDENTITY_REGIP?: string
+  COUNTIDENTITY_REGUSER_ID?: number
+  COUNTIDENTITY_CORP_ID?: number
+}

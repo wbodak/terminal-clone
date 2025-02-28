@@ -1,0 +1,16 @@
+import { Company } from '../db/Company'
+
+export interface CompanyAuthor {
+  ID: number
+  COMPANYAUTHOR_COMPANY_ID: number
+  COMPANYAUTHOR_NAME: string
+  COMPANYAUTHOR_TITLE?: string
+  COMPANYAUTHOR_PHONE?: string
+  COMPANYAUTHOR_MOBILPHONE?: string
+  COMPANYAUTHOR_EMAIL?: string
+  COMPANYAUTHOR_BIRTHDAY?: Date
+  COMPANYAUTHOR_REGUSER_ID: number
+  COMPANYAUTHOR_REGDATE: Date
+  COMPANYAUTHOR_REGIP: string
+  COMPANYAUTHOR_COMPANY?: Company
+}

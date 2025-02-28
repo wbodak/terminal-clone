@@ -1,0 +1,11 @@
+export interface DimensionMaster {
+  ID: number
+  DIMENSIONMASTER_REGUSER_ID?: number
+  DIMENSIONMASTER_REGDATE?: Date
+  DIMENSIONMASTER_REGIP?: string
+  DIMENSIONMASTER_CORP_ID?: number
+  DIMENSIONMASTER_NUM?: number
+  DIMENSIONMASTER_NAME?: string
+  DIMENSIONMASTER_ORDER?: number
+  DIMENSIONMASTER_SHOW?: boolean
+}

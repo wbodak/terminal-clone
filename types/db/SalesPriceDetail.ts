@@ -1,0 +1,23 @@
+import { SalesPriceMaster } from '../db/SalesPriceMaster'
+import { SalesPriceDetailSub } from '../db/SalesPriceDetailSub'
+
+export interface SalesPriceDetail {
+  ID: number
+  SALESPRICEDETAIL_MASTER_ID: number
+  SALESPRICEDETAIL_ITEM_ID: number
+  SALESPRICEDETAIL_UNIT_ID: number
+  SALESPRICEDETAIL_PRICE: number
+  SALESPRICEDETAIL_CLOSED: boolean
+  SALESPRICEDETAIL_STARTDATE: Date
+  SALESPRICEDETAIL_ENDDATE: Date
+  SALESPRICEDETAIL_REGUSER_ID: number
+  SALESPRICEDETAIL_REGDATE: Date
+  SALESPRICEDETAIL_REGIP: string
+  SALESPRICEDETAIL_PROFILE_ID?: number
+  SALESPRICEDETAIL_ALLOY_ID?: number
+  SALESPRICEDETAIL_SURFACE_ID?: number
+  SALESPRICEDETAIL_HARDNESS_ID?: number
+  SALESPRICEDETAIL_COLOR_ID?: number
+  SALESPRICEDETAIL_MASTER?: SalesPriceMaster
+  SalesPriceDetailSub: SalesPriceDetailSub[]
+}
