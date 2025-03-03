@@ -4,6 +4,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Header from "./Header";
 import MyText from "./Elements/MyText";
 import Bottom, { BottomProps } from "./Bottom/Bottom";
+import { StatusBar } from "expo-status-bar";
 
 type Props = {
   children: React.ReactNode;
@@ -36,6 +37,7 @@ const Layout = ({
         paddingBottom: insets.bottom,
       }}
     >
+      <StatusBar style="light" />
       {hasHeader && (
         <Header
           title={headerTitle}
