@@ -9,7 +9,7 @@ const screenWidth = Dimensions.get("window").width;
 
 export type MenuCardProps = {
   title: string;
-  path: Href<string | object>;
+  path: string;
   icon: keyof typeof icons;
   color: string;
 };

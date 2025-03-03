@@ -20,7 +20,7 @@ const MenuCardList = ({ data }: Props) => {
             {menuItem.list.map((detailMenu, i) => (
               <View key={i} style={styles.menuItem}>
                 <MenuCard
-                  path={detailMenu.SETMENUDETAIL_PATH as Href<string | object>}
+                  path={detailMenu.SETMENUDETAIL_PATH}
                   title={detailMenu.SETMENUDETAIL_TITLE}
                   icon={
                     detailMenu.SETMENUDETAIL_PATH.replace(
