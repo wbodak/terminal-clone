@@ -18,6 +18,7 @@ import MyDropdown from "@/components/Elements/MyDropdown";
 import { icons } from "@/assets/icons";
 import { V_SetUserCorporation } from "@/types/db/V_SetUserCorporation";
 import Layout from "@/components/Layout";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 const Login = () => {
   const router = useRouter();
@@ -28,9 +29,9 @@ const Login = () => {
   const [year, setYear] = useState(`${new Date().getFullYear()}`);
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [hasApiUrl, setHasApiUrl] = useState<boolean>(true);
-  const [apiUrl, setApiUrl] = useState<string>("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [hasApiUrl, setHasApiUrl] = useState(true);
+  const [apiUrl, setApiUrl] = useState("");
   const [corporationDtos, setCorporationDtos] = useState<SelectBoxDto[]>([]);
 
   const [selectionData, setSelectionData] = useState<
@@ -140,6 +141,19 @@ const Login = () => {
     });
   };
 
+  const backToApiUrl = () => {
+    setHasApiUrl(false);
+    setApiUrl("");
+    removeDataFromStorage("apiUrl");
+    resetForm();
+  };
+  const resetForm = () => {
+    setUserName("");
+    setPassword("");
+    setCorpId(0);
+    setSectionId(0);
+  };
+
   return (
     <Layout hasHeader={false} fullWidth>
       <ScrollView
@@ -186,6 +200,15 @@ const Login = () => {
               paddingHorizontal: 32,
             }}
           >
+            {hasApiUrl && (
+              <Ionicons
+                name="arrow-back"
+                size={24}
+                color="#e09607"
+                onPress={backToApiUrl}
+              />
+            )}
+
             <View
               style={{
                 width: "100%",

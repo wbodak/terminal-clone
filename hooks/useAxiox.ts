@@ -5,16 +5,11 @@ import { getDataFromStorage } from '@/utils/asyncStore'
 import { useGlobalContext } from './useGlobalContext'
 import { CustomAlertProps } from '@/components/SnackeBar/SnackeBar'
 
-let apiHost = ''
-
 const getApiUrl = async () => {
-  if (!!apiHost) return apiHost
-  await getDataFromStorage('apiUrl').then((apiUrl: string | null) => {
-    if (!apiUrl) return null
-    apiHost = apiUrl
-  })
-  return apiHost
+  const apiUrl = await getDataFromStorage('apiUrl')
+  return apiUrl || ''
 }
+
 
 export const serverApi = axios.create({
   headers: {
@@ -81,7 +76,7 @@ export const useAxios = () => {
   }: ApiPorps): Promise<void | AxiosResponse<any, any>> => {
     if (!noLoading) startLoader()
     if (sendToken) headers = Object.assign(headers, await getToken())
-    return serverApi
+    return serverApi 
       .get(`${await getApiUrl()}${path}`, { headers })
       .then(res => {
         success && success(res.data)

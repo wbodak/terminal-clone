@@ -22,34 +22,12 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { Image } from "react-native";
 import { IMAGE_DOMAIN } from "@/constants/env";
 import MyText from "../Elements/MyText";
-import { removeDataFromStorage } from "@/utils/asyncStore";
+import { getDataFromStorage, removeDataFromStorage } from "@/utils/asyncStore";
+import Feather from "@expo/vector-icons/Feather";
 
 interface SideBarProps {
   user?: WebUserDto;
 }
-
-export const ConfirmDialog = ({ visible, onConfirm, onCancel }: any) => {
-  return (
-    <Modal
-      transparent
-      animationType="fade"
-      visible={visible}
-      onRequestClose={onCancel}
-    >
-      <View style={styles.overlay}>
-        <View style={styles.dialog}>
-          <Text style={styles.dialogText}>
-            Are you sure you want to log out?
-          </Text>
-          <View style={styles.buttonContainer}>
-            <Button title="Cancel" onPress={onCancel} color="gray" />
-            <Button title="Logout" onPress={onConfirm} color="red" />
-          </View>
-        </View>
-      </View>
-    </Modal>
-  );
-};
 
 export default function SideBar({ user }: SideBarProps) {
   const router = useRouter();
@@ -61,7 +39,8 @@ export default function SideBar({ user }: SideBarProps) {
     offset.value = open ? -300 : 0;
   };
 
-  const handleLogout = () => {
+  const handleLogout = (clearApiUrl: boolean = false) => {
+    clearApiUrl && removeDataFromStorage("apiUrl");
     removeDataFromStorage("userToken");
     removeDataFromStorage("userData");
     router.replace("/login");
@@ -85,6 +64,29 @@ export default function SideBar({ user }: SideBarProps) {
       },
     ]);
 
+  const getApiUrl = async () => {
+    const value = await getDataFromStorage("apiUrl");
+    return value;
+  };
+
+  const confirmChangeApiUrl = async () =>
+    Alert.alert(
+      `${await getApiUrl()} kullandığınız api Url değiştirilecek`,
+      "Oturumunuz kapatılacak api Url değiştirlecek emin misiniz ?",
+      [
+        {
+          text: "Vazgeç",
+          style: "cancel",
+        },
+        {
+          text: "Çıkış yap",
+          onPress: () => {
+            handleLogout(true);
+          },
+        },
+      ]
+    );
+
   return (
     <>
       <TouchableOpacity style={styles.menuButton} onPress={toggleMenu}>
@@ -93,10 +95,11 @@ export default function SideBar({ user }: SideBarProps) {
 
       <Animated.View style={[styles.sidebar, animatedStyle]}>
         <View style={styles.sidebarHeader}>
-          <Image
-            source={{ uri: `${IMAGE_DOMAIN}${user?.image}` }}
-            style={{ width: 42, height: 42, borderRadius: 500 }}
-            resizeMode="contain"
+          <Feather
+            name="server"
+            size={32}
+            color="white"
+            onPress={confirmChangeApiUrl}
           />
           <MaterialCommunityIcons
             name="theme-light-dark"
@@ -112,6 +115,11 @@ export default function SideBar({ user }: SideBarProps) {
         </View>
 
         <View style={styles.divider}></View>
+        <Image
+          source={{ uri: `${IMAGE_DOMAIN}${user?.image}` }}
+          style={{ width: 42, height: 42, borderRadius: 500 }}
+          resizeMode="contain"
+        />
         <MyText style={styles.content}>{user?.nameSurname}</MyText>
         <MyText style={styles.content}>{user?.corpName}</MyText>
       </Animated.View>

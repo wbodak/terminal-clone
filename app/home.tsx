@@ -13,7 +13,7 @@ import { MenuItem } from "@/types/dtos/MenuItem";
 import { getDataFromStorage, removeDataFromStorage } from "@/utils/asyncStore";
 
 import { FAB } from "react-native-paper";
-import SideBar, { ConfirmDialog } from "@/components/SideBar/SideBar";
+import SideBar from "@/components/SideBar/SideBar";
 
 const screenHeight = Dimensions.get("window").height;
 
@@ -49,11 +49,6 @@ const Home = () => {
 
   return (
     <Layout hasHeader={false} fullWidth>
-      <ConfirmDialog
-        visible={false}
-        onConfirm={() => console.log("hocam")}
-        onCancel={() => console.log("hocam")}
-      />
       <View style={styles.container}>
         <View style={styles.innerContainer}>
           <View style={styles.imageContainer}>
