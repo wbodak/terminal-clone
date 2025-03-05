@@ -37,7 +37,7 @@ const Layout = ({
         paddingBottom: insets.bottom,
       }}
     >
-      <StatusBar style="auto" />
+      {/* <StatusBar style="auto" /> */}
       {hasHeader && (
         <Header
           title={headerTitle}
