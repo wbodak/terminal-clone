@@ -8,6 +8,7 @@ import {
   Text,
   Button,
   Alert,
+  useColorScheme,
 } from "react-native";
 import { useRouter } from "expo-router";
 import Animated, {
@@ -24,6 +25,7 @@ import { IMAGE_DOMAIN } from "@/constants/env";
 import MyText from "../Elements/MyText";
 import { getDataFromStorage, removeDataFromStorage } from "@/utils/asyncStore";
 import Feather from "@expo/vector-icons/Feather";
+import UserAvatar from "../UserAvatar/UserAvatar";
 
 interface SideBarProps {
   user?: WebUserDto;
@@ -86,42 +88,105 @@ export default function SideBar({ user }: SideBarProps) {
         },
       ]
     );
-
+  const styles = StyleSheet.create({
+    menuButton: {
+      position: "absolute",
+      top: 18,
+      left: 20,
+      borderRadius: 5,
+    },
+    sidebar: {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: 300,
+      height: "100%",
+      backgroundColor: "#1C1C1E",
+      zIndex: 99,
+      borderRadius: 8,
+    },
+    sidebarHeader: {
+      padding: 16,
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      gap: 10,
+    },
+    divider: {
+      width: "100%",
+      height: 1,
+      backgroundColor: "#444",
+    },
+    content: {
+      padding: 20,
+    },
+    overlay: {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
+      zIndex: 98,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    dialog: {
+      width: 250,
+      padding: 20,
+      backgroundColor: "white",
+      borderRadius: 10,
+      alignItems: "center",
+    },
+    dialogText: {
+      fontSize: 16,
+      marginBottom: 20,
+      textAlign: "center",
+    },
+    buttonContainer: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      width: "100%",
+    },
+  });
   return (
     <>
       <TouchableOpacity style={styles.menuButton} onPress={toggleMenu}>
-        <SimpleLineIcons name="menu" size={24} color="white" />
+        <SimpleLineIcons name="menu" size={24} color="#CCCCCC" />
       </TouchableOpacity>
 
       <Animated.View style={[styles.sidebar, animatedStyle]}>
         <View style={styles.sidebarHeader}>
-          <Feather
-            name="server"
-            size={32}
-            color="white"
-            onPress={confirmChangeApiUrl}
-          />
-          <MaterialCommunityIcons
-            name="theme-light-dark"
-            size={32}
-            color="white"
-          />
+          <TouchableOpacity>
+            <UserAvatar
+              imageUrl={`${IMAGE_DOMAIN}${user?.image}`}
+              borderShape="circle"
+              name={user?.nameSurname}
+              corp={user?.corpName}
+            />
+          </TouchableOpacity>
           <AntDesign
             name="logout"
             size={32}
-            color="white"
+            color="#CCCCCC"
             onPress={confirmLogout}
           />
         </View>
 
         <View style={styles.divider}></View>
-        <Image
-          source={{ uri: `${IMAGE_DOMAIN}${user?.image}` }}
-          style={{ width: 42, height: 42, borderRadius: 500 }}
-          resizeMode="contain"
+
+        <Feather
+          name="server"
+          size={32}
+          color={"#CCCCCC"}
+          onPress={confirmChangeApiUrl}
         />
-        <MyText style={styles.content}>{user?.nameSurname}</MyText>
-        <MyText style={styles.content}>{user?.corpName}</MyText>
+        <MaterialCommunityIcons
+          name="theme-light-dark"
+          size={32}
+          color={"#CCCCCC"}
+        />
       </Animated.View>
 
       {open && (
@@ -132,66 +197,3 @@ export default function SideBar({ user }: SideBarProps) {
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  menuButton: {
-    position: "absolute",
-    top: 18,
-    left: 20,
-    borderRadius: 5,
-  },
-  sidebar: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    width: 300,
-    height: "100%",
-    backgroundColor: "#333",
-    zIndex: 99,
-    borderRadius: 8,
-  },
-  sidebarHeader: {
-    paddingHorizontal: 20,
-    paddingTop: 20,
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 20,
-  },
-  divider: {
-    width: "100%",
-    height: 1,
-    backgroundColor: "#444",
-  },
-  content: {
-    padding: 20,
-  },
-  overlay: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    zIndex: 98,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  dialog: {
-    width: 250,
-    padding: 20,
-    backgroundColor: "white",
-    borderRadius: 10,
-    alignItems: "center",
-  },
-  dialogText: {
-    fontSize: 16,
-    marginBottom: 20,
-    textAlign: "center",
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    width: "100%",
-  },
-});

@@ -2,9 +2,8 @@ import React from "react";
 import MenuCard from "./MenuCard";
 import { View, StyleSheet, ScrollView } from "react-native";
 import { DetailMenuItem, MenuItem } from "@/types/dtos/MenuItem";
-import { Text } from "react-native-paper";
-import { Href } from "expo-router";
 import { icons } from "@/assets/icons";
+import MyText from "../Elements/MyText";
 
 type Props = {
   data: MenuItem[];
@@ -15,10 +14,10 @@ const MenuCardList = ({ data }: Props) => {
     <ScrollView style={styles.container}>
       {data.map((menuItem, index) => (
         <View key={index}>
-          <Text style={styles.menuTitle}>{menuItem.name}</Text>
+          <MyText style={styles.menuTitle}>{menuItem.name}</MyText>
           <View style={styles.menuList}>
             {menuItem.list.map((detailMenu, i) => (
-              <View key={i} style={styles.menuItem}>
+              <View key={i} style={styles.menuItemWrapper}>
                 <MenuCard
                   path={detailMenu.SETMENUDETAIL_PATH}
                   title={detailMenu.SETMENUDETAIL_TITLE}
@@ -44,22 +43,19 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   menuTitle: {
-    fontFamily: "Inter",
-    color: "white",
     borderBottomWidth: 1,
     borderColor: "#313236",
     paddingBottom: 5,
   },
   menuList: {
-    display: "flex",
     flexDirection: "row",
-    gap: 15,
     flexWrap: "wrap",
     justifyContent: "space-between",
+    gap: 12,
     marginTop: 16,
     marginBottom: 26,
   },
-  menuItem: {
+  menuItemWrapper: {
     width: "48%",
   },
 });

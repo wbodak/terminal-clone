@@ -1,21 +1,44 @@
-import React, { useEffect, useState } from "react";
-import { Image, View, Dimensions, StyleSheet } from "react-native";
+import React, { useEffect, useState, useRef } from "react";
+import {
+  Image,
+  View,
+  Dimensions,
+  StyleSheet,
+  TouchableOpacity,
+  Animated,
+  Modal,
+  FlatList,
+  Alert,
+} from "react-native";
+
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import { useDebounce } from "@/hooks/useDebaounce";
 
 import Layout from "@/components/Layout";
 import MenuCardList from "@/components/Menu/MenuCardList";
+import MyText from "@/components/Elements/MyText";
 
 import { bgColors } from "@/constants/colors";
-
-import { WebUserDto } from "@/types/dtos/WebUserDto";
 import { MenuItem } from "@/types/dtos/MenuItem";
+
 import { getDataFromStorage, removeDataFromStorage } from "@/utils/asyncStore";
 
-import { FAB } from "react-native-paper";
-import SideBar from "@/components/SideBar/SideBar";
+import { WebUserDto } from "@/types/dtos/WebUserDto";
+import { useRouter } from "expo-router";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import { useGlobalContext } from "@/hooks/useGlobalContext";
+import MyButton from "@/components/Elements/MyButton";
 
-const screenHeight = Dimensions.get("window").height;
+const darkColors = {
+  background: "#12263A",
+  cardBackground: "#1A3A5A",
+  textPrimary: "#FFFFFF",
+  textSecondary: "#A0B1C5",
+  accent: "#4A90E2",
+  border: "rgba(255,255,255,0.1)",
+  shadowColor: "#000000",
+};
 
 const Home = () => {
   // States
@@ -24,104 +47,210 @@ const Home = () => {
   const debaouncedValue = useDebounce(keyword, 300);
   const [user, setUser] = useState<WebUserDto>();
 
-  //Effects
+  const router = useRouter();
+  const { showDialog } = useGlobalContext();
+
+  const [isMenuVisible, setIsMenuVisible] = useState(false);
+
+  const getUserInitials = () => {
+    if (!user || !user?.nameSurname) return "NA";
+    const nameParts = user.nameSurname.split(" ");
+    if (nameParts.length >= 2) {
+      return `${nameParts[0][0]}${
+        nameParts[nameParts.length - 1][0]
+      }`.toUpperCase();
+    }
+    return nameParts[0].substring(0, 2).toUpperCase();
+  };
+
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return "Günaydın";
+    if (hour < 18) return "İyi günler";
+    return "İyi akşamlar";
+  };
+
+  const updateMenuList = (userData: WebUserDto) => {
+    const menuList = userData.setMenuMasterList.map((menuMaster) => ({
+      name: menuMaster.SETMENUMASTER_TITLE,
+      list: menuMaster.SetMenuDetailGroups.flat()
+        .filter(
+          (x) =>
+            !x.SETMENUDETAIL_PASSIVE &&
+            x.SETMENUDETAIL_TITLE.toLocaleLowerCase("tr-TR").includes(
+              debaouncedValue.toLocaleLowerCase("tr-TR")
+            )
+        )
+        .map((x, i) => ({ ...x, color: bgColors[i % bgColors.length] })),
+    }));
+    setUser(userData);
+    setMenu(menuList);
+  };
+
+  // Effects
   useEffect(() => {
     getDataFromStorage("userData").then((value) => {
       if (!value) return;
       const userData: WebUserDto = JSON.parse(value);
-
-      const menuList = userData.setMenuMasterList.map((menuMaster) => ({
-        name: menuMaster.SETMENUMASTER_TITLE,
-        list: menuMaster.SetMenuDetailGroups.flat()
-          .filter(
-            (x) =>
-              !x.SETMENUDETAIL_PASSIVE &&
-              x.SETMENUDETAIL_TITLE.toLocaleLowerCase("tr-TR").includes(
-                debaouncedValue.toLocaleLowerCase("tr-TR")
-              )
-          )
-          .map((x, i) => ({ ...x, color: bgColors[i % bgColors.length] })),
-      }));
-      setUser(userData);
-      setMenu(menuList);
+      updateMenuList(userData);
     });
   }, [debaouncedValue]);
 
+  const handleOpenMenu = () => {
+    setIsMenuVisible(!isMenuVisible);
+  };
+
+  const handleLogout = () => {
+    removeDataFromStorage("userToken");
+    removeDataFromStorage("userData");
+    router.replace("/login");
+  };
+
   return (
-    <Layout hasHeader={false} fullWidth>
-      <View style={styles.container}>
-        <View style={styles.innerContainer}>
-          <View style={styles.imageContainer}>
-            <Image
-              source={require("../assets/images/workbook-terminal.png")}
-              style={styles.logo}
-              resizeMode="contain"
-            />
-          </View>
+    <Layout hasHeader={false} fullWidth barcodeButton={true}>
+      <SafeAreaView style={styles.container}>
+        <View style={styles.header}>
+          <TouchableOpacity
+            style={styles.avatarContainer}
+            activeOpacity={0.7}
+            onPress={handleOpenMenu}
+          >
+            <View style={styles.initialsContainer}>
+              <MyText style={styles.initials}>{getUserInitials()}</MyText>
+            </View>
+
+            <View style={styles.userInfo}>
+              <MyText style={styles.greeting}>{getGreeting()}</MyText>
+              <MyText style={styles.userName}>
+                {user?.nameSurname || "Kullanıcı"}
+              </MyText>
+            </View>
+          </TouchableOpacity>
+          <Image
+            source={require("../assets/images/workbook-terminal.png")}
+            style={styles.logo}
+            resizeMode="contain"
+          />
         </View>
-        <SideBar user={user} />
-        <MenuCardList data={menu} />
-        <FAB
-          icon={() => (
-            <Image
-              source={require("../assets/icons/barcode.gif")}
-              style={styles.fabIcon}
-              resizeMode="contain"
-            />
-          )}
-          customSize={64}
-          mode="elevated"
-          style={styles.fabStyle}
-          onPress={() => console.log("Pressed")}
-        />
-      </View>
+
+        {isMenuVisible && (
+          <View style={styles.dropdownContainer}>
+            <TouchableOpacity
+              style={styles.menuItem}
+              onPress={() => {
+                showDialog({
+                  type: "info",
+                  title: "Çıkış yap",
+                  message: "Oturumunuz Kapatılacaktır emin misiniz ?",
+                  callback: () => handleLogout(),
+                });
+              }}
+            >
+              <AntDesign name="logout" size={32} color="#CCCCCC" />
+              <MyText style={styles.menuItemText}>Çıkış Yap</MyText>
+            </TouchableOpacity>
+          </View>
+        )}
+
+        <Animated.ScrollView
+          contentContainerStyle={styles.scrollContent}
+          scrollEventThrottle={16}
+          showsVerticalScrollIndicator={false}
+        >
+          <MenuCardList data={menu} />
+        </Animated.ScrollView>
+      </SafeAreaView>
     </Layout>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    height: screenHeight,
+    flex: 1,
+    backgroundColor: darkColors.background,
   },
-  innerContainer: {
-    paddingHorizontal: 24,
-    paddingVertical: 8,
-    display: "flex",
+  header: {
     flexDirection: "row",
-    alignContent: "center",
-  },
-  menuIcon: {
-    display: "flex",
-    justifyContent: "center",
-  },
-  imageContainer: {
-    width: "100%",
-    display: "flex",
+    justifyContent: "space-between",
     alignItems: "center",
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    backgroundColor: darkColors.background,
+    borderBottomWidth: 1,
+    borderBottomColor: darkColors.border,
+    zIndex: 10,
+  },
+  avatarContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  userInfo: {
+    marginLeft: 12,
+  },
+  greeting: {
+    fontSize: 12,
+    color: darkColors.textSecondary,
+    marginBottom: 2,
+  },
+  userName: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: darkColors.textPrimary,
+  },
+  initialsContainer: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: darkColors.accent,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  initials: {
+    color: darkColors.textPrimary,
+    fontSize: 16,
+    fontWeight: "bold",
   },
   logo: {
     height: 42,
+    width: 180,
   },
-  fabIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: 50,
-    margin: 0,
+  scrollContent: {
+    paddingHorizontal: 16,
+    paddingTop: 16,
   },
-  fabStyle: {
-    backgroundColor: "white",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    width: 64,
-    height: 64,
-    paddingRight: 8,
-    paddingBottom: 8,
-    borderRadius: 50,
+  // Dropdown menu styles
+  dropdownContainer: {
     position: "absolute",
-    marginVertical: 25,
-    right: 16,
-    bottom: 16,
+    top: 76, // Below the header
+    left: 16,
+    backgroundColor: darkColors.cardBackground,
+    borderRadius: 8,
+    width: 200,
+    zIndex: 20,
+    shadowColor: darkColors.shadowColor,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 5,
+    borderWidth: 1,
+    borderColor: darkColors.border,
+  },
+  menuItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: darkColors.border,
+    gap: 16,
+  },
+  menuItemIcon: {
+    marginRight: 12,
+    fontSize: 18,
+  },
+  menuItemText: {
+    color: darkColors.textPrimary,
+    fontSize: 14,
   },
 });
 

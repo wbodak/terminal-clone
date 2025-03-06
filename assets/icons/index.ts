@@ -22,5 +22,7 @@ export const icons = {
   'checkbox-uncheck': require('./checkbox-uncheck.png') as ImageSourcePropType,
   'history-blue': require('./history-blue.png') as ImageSourcePropType,
   materialOutput: require('./exitProduction.png') as ImageSourcePropType,
-  logout: require('./logout.png') as ImageSourcePropType
+  logout: require('./logout.png') as ImageSourcePropType,
+  'success': require('./success.png') as ImageSourcePropType,
+
 }

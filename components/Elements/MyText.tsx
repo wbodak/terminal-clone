@@ -1,16 +1,16 @@
-import React from 'react'
-import { StyleSheet } from 'react-native'
-import { Text as DefaultText } from 'react-native-paper'
+import React from "react";
+import { StyleSheet, useColorScheme } from "react-native";
+import { Text as DefaultText } from "react-native-paper";
 
-const MyText: React.FC<React.ComponentProps<typeof DefaultText>> = props => {
-  return <DefaultText {...props} style={[styles.text, props.style]} />
-}
+const MyText: React.FC<React.ComponentProps<typeof DefaultText>> = (props) => {
+  const styles = StyleSheet.create({
+    text: {
+      color: "white",
+      fontFamily: "Inter",
+    },
+  });
 
-const styles = StyleSheet.create({
-  text: {
-    color: 'white',
-    fontFamily: 'Inter'
-  }
-})
+  return <DefaultText {...props} style={[styles.text, props.style]} />;
+};
 
-export default MyText
+export default MyText;

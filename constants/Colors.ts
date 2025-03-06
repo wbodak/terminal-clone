@@ -5,24 +5,12 @@
 
 export const bgColors = ['#4B2A25', '#19334C', '#2A4135', '#351455', '#645320']
 
-const tintColorLight = '#0a7ea4'
-const tintColorDark = '#fff'
-
 export const colors = {
-  light: {
-    text: '#11181C',
-    background: '#fff',
-    tint: tintColorLight,
-    icon: '#687076',
-    tabIconDefault: '#687076',
-    tabIconSelected: tintColorLight
-  },
-  dark: {
-    text: '#ECEDEE',
-    background: '#151718',
-    tint: tintColorDark,
-    icon: '#9BA1A6',
-    tabIconDefault: '#9BA1A6',
-    tabIconSelected: tintColorDark
-  }
-}
+  background: "#12263A",
+  cardBackground: "#1A3A5A",
+  textPrimary: "#FFFFFF",
+  textSecondary: "#A0B1C5",
+  accent: "#4A90E2",
+  border: "rgba(255,255,255,0.1)",
+  shadowColor: "#000000",
+};

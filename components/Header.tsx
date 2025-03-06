@@ -1,7 +1,6 @@
 import React from "react";
 import { View, Image } from "react-native";
 import MyText from "./Elements/MyText";
-import { LinearGradient } from "expo-linear-gradient";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useRoute } from "@react-navigation/native";
 import { icons } from "@/assets/icons";
@@ -20,10 +19,7 @@ const Header = ({ title, description, backButtonEnable = true }: Props) => {
   const router = useRouter();
 
   return (
-    <LinearGradient
-      colors={["#0A4A84", "#16171A"]}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 0, y: 1 }}
+    <View
       style={{
         paddingHorizontal: 16,
         paddingTop: insets.top + 8,
@@ -96,7 +92,7 @@ const Header = ({ title, description, backButtonEnable = true }: Props) => {
           </MyText>
         </View>
       )}
-    </LinearGradient>
+    </View>
   );
 };
 

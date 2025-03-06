@@ -1,5 +1,5 @@
 import { icons } from "@/assets/icons";
-import { Href, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import * as React from "react";
 import { Dimensions, Image, View } from "react-native";
 import { Card } from "react-native-paper";
@@ -23,46 +23,58 @@ const MenuCard = ({ title, icon, path = "/home", color }: MenuCardProps) => {
         router.push({ pathname: path as any, params: { title: title } })
       }
       style={{
-        backgroundColor: "none",
-        width: screenWidth / 2 - 26,
         height: 98,
+        borderRadius: 6,
+        overflow: "hidden",
       }}
     >
       <View
         style={{
-          paddingVertical: 4,
-          paddingLeft: 16,
-          paddingRight: 8,
-          width: "100%",
-          height: 98,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          alignItems: "flex-start",
+          flexDirection: "row",
+          alignItems: "center",
           backgroundColor: color,
-          borderRadius: 4,
-          shadowColor: "#000",
-          shadowOffset: { width: 0, height: 4 },
-          shadowOpacity: 1,
-          shadowRadius: 4,
-          elevation: 4,
+          height: "100%",
         }}
       >
-        <Image
-          source={icons[icon]}
-          style={{ width: 48, height: 48 }}
-          resizeMode="contain"
-        />
-        <MyText
+        <View
           style={{
-            fontFamily: "Inter",
-            fontSize: 15,
-            color: "white",
-            lineHeight: 18,
+            flex: 4,
+            justifyContent: "center",
+            alignItems: "center",
+            paddingHorizontal: 16,
           }}
         >
-          {title}
-        </MyText>
+          <Image
+            source={icons[icon]}
+            style={{ width: 48, height: 48 }}
+            resizeMode="contain"
+          />
+        </View>
+        <View
+          style={{
+            width: 1,
+            height: "70%",
+            backgroundColor: "rgba(255,255,255,0.5)",
+          }}
+        />
+        <View
+          style={{
+            flex: 8,
+            justifyContent: "center",
+            paddingHorizontal: 16,
+          }}
+        >
+          <MyText
+            style={{
+              fontFamily: "Inter",
+              fontSize: 15,
+              color: "white",
+              lineHeight: 18,
+            }}
+          >
+            {title}
+          </MyText>
+        </View>
       </View>
     </Card>
   );
