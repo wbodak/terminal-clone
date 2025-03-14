@@ -102,7 +102,7 @@ const Layout = ({
               style={styles.fabIcon}
             />
           )}
-          customSize={64} // Reduced from 80 to 64
+          customSize={64}
           style={styles.fabStyle}
           onPress={() => console.log("Pressed")}
         />

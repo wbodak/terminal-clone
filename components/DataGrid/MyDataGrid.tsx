@@ -6,6 +6,7 @@ import {
   Image,
   StyleProp,
   ViewStyle,
+  StyleSheet,
 } from "react-native";
 import { DataTable } from "react-native-paper";
 import MyText from "../Elements/MyText";
@@ -17,6 +18,8 @@ import { useGlobalContext } from "@/hooks/useGlobalContext";
 import MyInput from "../Elements/MyInput";
 import { useDebounce } from "@/hooks/useDebaounce";
 import useStore from "@/store/useStore";
+import { colors } from "@/constants/Colors";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 type Column = {
   dataField: string;
@@ -41,6 +44,7 @@ type Props = {
   }[];
   gridStyle?: StyleProp<ViewStyle>;
   containerStyle?: StyleProp<ViewStyle>;
+  multiple?: boolean;
 };
 
 const MyDataGrid = ({
@@ -55,14 +59,28 @@ const MyDataGrid = ({
   editPageFields = [],
   gridStyle,
   containerStyle,
+  multiple = false,
 }: Props) => {
-  // const gridSelectedElement = useStore(state => state.gridSelectedElement)
-
   const { showSnackeBar } = useGlobalContext();
   const [tableData, setTableData] = useState<any>(data.slice(0, 15));
   const [keyword, setKeyword] = useState("");
-  const debaouncedValue = useDebounce(keyword, 300);
-  const [selectedRowMap, setSelectedRowMap] = useState<any>({});
+  // const debaouncedValue = useDebounce(keyword, 300);
+  const [selectedItems, setSelectedItems] = useState<any[]>([]);
+
+  const handleSelect = (tableItem: any) => {
+    const isExist = selectedItems.find((item: any) => item.ID === tableItem.ID);
+    if (multiple) {
+      if (isExist) {
+        setSelectedItems((prev) =>
+          prev.filter((item: any) => item.ID !== tableItem.ID)
+        );
+      } else {
+        setSelectedItems((prev) => [...prev, tableItem]);
+      }
+    } else {
+      setSelectedItems([tableItem]);
+    }
+  };
 
   useEffect(() => {
     if (searchedField) {
@@ -71,12 +89,12 @@ const MyDataGrid = ({
           .filter((x) =>
             x[searchedField]
               .toLocaleLowerCase("tr-TR")
-              .includes(debaouncedValue.toLocaleLowerCase("tr-TR"))
+              .includes(keyword.toLocaleLowerCase("tr-TR"))
           )
           .slice(0, 15) || []
       );
     }
-  }, [debaouncedValue]);
+  }, [keyword]);
 
   const deleteRowFromState = (id: number) => {
     const filtredData = data.filter((item) => {
@@ -88,9 +106,12 @@ const MyDataGrid = ({
   const visibleColumns = columns.filter((column) => column.visible != false);
 
   useEffect(() => {
-    setSelectedRowMap({});
     setTableData(data.slice(0, 15));
   }, [data]);
+
+  const isSelected = (id: number) => {
+    return selectedItems.some((item: any) => item.ID === id);
+  };
 
   return (
     <>
@@ -132,11 +153,6 @@ const MyDataGrid = ({
                 keyExtractor={(_) => Math.random().toString()}
                 ListHeaderComponent={
                   <DataTable.Header>
-                    {(editPage || deletePath || onSelect) && (
-                      <DataTable.Title style={{ width: 75 }}>
-                        <MyText>İşlemler</MyText>
-                      </DataTable.Title>
-                    )}
                     {visibleColumns.map((column, i) => {
                       return (
                         <DataTable.Title
@@ -171,12 +187,19 @@ const MyDataGrid = ({
                   editPageFields.forEach((f) => {
                     editPageProps[f.targetField] = item.item[f.sourceField];
                   });
-
-                  const isSelected = selectedRowMap[item.item.ID] != undefined;
-
                   return (
-                    <DataTable.Row key={item.index} style={{ padding: 0 }}>
-                      {(editPage || deletePath || onSelect) && (
+                    <DataTable.Row
+                      key={item.index}
+                      style={
+                        isSelected(item.item.ID)
+                          ? styles.selectedRow
+                          : styles.row
+                      }
+                      onPress={() => {
+                        handleSelect(item.item);
+                      }}
+                    >
+                      {/* {(editPage || deletePath || onSelect) && (
                         <DataTable.Title
                           style={{
                             marginRight: 10,
@@ -198,7 +221,6 @@ const MyDataGrid = ({
                               gap: 10,
                             }}
                           >
-                            {!!onSelect && <SelectButton data={item.item} />}
                             {deletePath && (
                               <DeleteButton
                                 deletePath={deletePath}
@@ -217,7 +239,7 @@ const MyDataGrid = ({
                             )}
                           </View>
                         </DataTable.Title>
-                      )}
+                      )} */}
                       {columnValues.map((column: any, j) => {
                         return (
                           <DataTable.Title
@@ -243,7 +265,49 @@ const MyDataGrid = ({
                 }}
               />
             </ScrollView>
-            {!!onSelect && <SaveButton onSelect={onSelect} />}
+            {!!onSelect && (
+              <View
+                style={{
+                  display: "flex",
+                  alignItems: "flex-end",
+                }}
+              >
+                <MyButton
+                  containerStyle={{
+                    width: "100%",
+                  }}
+                  style={{ backgroundColor: "green" }}
+                  onPress={() => {
+                    if (selectedItems.length == 0) {
+                      showSnackeBar({
+                        dialogName: "Dlg_ErrorProcess",
+                        message: "Lütfen bir seçim yapınız.",
+                      });
+                      return;
+                    } else {
+                      onSelect({
+                        data: selectedItems,
+                      });
+                    }
+                  }}
+                >
+                  <View
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      gap: 8,
+                    }}
+                  >
+                    <Ionicons name="checkmark-circle" size={24} color="white" />
+                    <MyText style={{ fontSize: 16, fontWeight: "bold" }}>
+                      Tamam
+                    </MyText>
+                  </View>
+                </MyButton>
+              </View>
+            )}
           </View>
         </View>
       )}
@@ -251,36 +315,15 @@ const MyDataGrid = ({
   );
 };
 
-const SaveButton = ({ onSelect }: any) => {
-  const gridSelectedElement = useStore((state) => state.gridSelectedElement);
-  const { showSnackeBar } = useGlobalContext();
-
-  return (
-    <View
-      style={{
-        display: "flex",
-        alignItems: "flex-end",
-      }}
-    >
-      <MyButton
-        containerStyle={{ width: 80, marginTop: 16, marginRight: 8 }}
-        style={{ backgroundColor: "green", height: 40 }}
-        onPress={() => {
-          if (Object.keys(gridSelectedElement).length == 0) {
-            showSnackeBar({
-              dialogName: "Dlg_ErrorProcess",
-              message: "Lütfen bir seçim yapınız.",
-            });
-            return;
-          } else {
-            onSelect({ data: Object.values(gridSelectedElement) });
-          }
-        }}
-      >
-        <MyText>Kaydet</MyText>
-      </MyButton>
-    </View>
-  );
-};
+const styles = StyleSheet.create({
+  row: {
+    backgroundColor: "unset",
+    borderRadius: 16,
+  },
+  selectedRow: {
+    backgroundColor: colors.accent,
+    borderRadius: 16,
+  },
+});
 
 export default MyDataGrid;

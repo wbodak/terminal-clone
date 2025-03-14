@@ -1,3 +1,5 @@
+import MyText from "@/components/Elements/MyText";
+import { colors } from "@/constants/Colors";
 import { Href, Link, Stack } from "expo-router";
 import { StyleSheet, View } from "react-native";
 import { Text } from "react-native-paper";
@@ -5,11 +7,11 @@ import { Text } from "react-native-paper";
 export default function NotFoundScreen() {
   return (
     <>
-      <Stack.Screen options={{ title: "Oops!" }} />
+      <Stack.Screen options={{ title: "Oops!", headerShown: false }} />
       <View style={styles.container}>
-        <Text>Böyle bir sayfa yok.</Text>
+        <MyText>Böyle bir sayfa yok.</MyText>
         <Link href={"/home"} style={styles.link}>
-          <Text>Ana sayfaya dön</Text>
+          <MyText>Ana sayfaya dön</MyText>
         </Link>
       </View>
     </>
@@ -22,6 +24,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     padding: 20,
+    backgroundColor: colors.background,
   },
   link: {
     marginTop: 15,

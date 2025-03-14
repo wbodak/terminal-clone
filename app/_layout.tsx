@@ -33,7 +33,7 @@ export default function RootLayout() {
           name="home"
           options={{
             headerShown: false,
-            animation: "fade",
+            // animation: "fade",
           }}
         />
         <Stack.Screen

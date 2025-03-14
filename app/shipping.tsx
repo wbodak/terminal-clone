@@ -11,7 +11,7 @@ import { getDataFromStorage } from "@/utils/asyncStore";
 import { transformSelctBoxData } from "@/utils/helper";
 import { useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState, useCallback } from "react";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import SectionTitle from "@/components/SectionTitle";
 import { V_StockMaster } from "@/types/db/V_StockMaster";
@@ -99,7 +99,7 @@ const Shipping = () => {
         },
       }}
     >
-      <View style={{ display: "flex", gap: 10, paddingHorizontal: 16 }}>
+      <View style={styles.wrapper}>
         <MyDropdown
           data={transformSelctBoxData(sourceStores)}
           placeholder="Depo Seçiniz"
@@ -123,16 +123,9 @@ const Shipping = () => {
           returnKeyType="next"
           value={formState?.SALESINSTRUCTIONMASTER_COMPANYNAME}
         />
-        <View
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            width: "100%",
-            gap: 10,
-          }}
-        >
+        <View style={styles.dateContainer}>
           <MyInput
-            containerStyle={{ flex: 1 }}
+            containerStyle={styles.flex1}
             readOnly
             label={"Talimat No"}
             returnKeyType="next"
@@ -141,7 +134,7 @@ const Shipping = () => {
           <MyDateInput
             label="Tarih"
             readOnly
-            containerStyle={{ flex: 1 }}
+            containerStyle={styles.flex1}
             value={formState?.SALESINSTRUCTIONMASTER_DATE}
           />
         </View>
@@ -190,5 +183,20 @@ const Shipping = () => {
     </Layout>
   );
 };
-
+const styles = StyleSheet.create({
+  wrapper: {
+    display: "flex",
+    gap: 10,
+    paddingHorizontal: 16,
+  },
+  dateContainer: {
+    display: "flex",
+    flexDirection: "row",
+    width: "100%",
+    gap: 10,
+  },
+  flex1: {
+    flex: 1,
+  },
+});
 export default Shipping;

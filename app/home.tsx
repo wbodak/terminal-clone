@@ -19,7 +19,6 @@ import Layout from "@/components/Layout";
 import MenuCardList from "@/components/Menu/MenuCardList";
 import MyText from "@/components/Elements/MyText";
 
-import { bgColors } from "@/constants/colors";
 import { MenuItem } from "@/types/dtos/MenuItem";
 
 import { getDataFromStorage, removeDataFromStorage } from "@/utils/asyncStore";
@@ -29,16 +28,7 @@ import { useRouter } from "expo-router";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { useGlobalContext } from "@/hooks/useGlobalContext";
 import MyButton from "@/components/Elements/MyButton";
-
-const darkColors = {
-  background: "#12263A",
-  cardBackground: "#1A3A5A",
-  textPrimary: "#FFFFFF",
-  textSecondary: "#A0B1C5",
-  accent: "#4A90E2",
-  border: "rgba(255,255,255,0.1)",
-  shadowColor: "#000000",
-};
+import { bgColors, colors } from "@/constants/Colors";
 
 const Home = () => {
   // States
@@ -94,7 +84,7 @@ const Home = () => {
       const userData: WebUserDto = JSON.parse(value);
       updateMenuList(userData);
     });
-  }, [debaouncedValue]);
+  }, []);
 
   const handleOpenMenu = () => {
     setIsMenuVisible(!isMenuVisible);
@@ -167,7 +157,7 @@ const Home = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: darkColors.background,
+    backgroundColor: colors.background,
   },
   header: {
     flexDirection: "row",
@@ -175,9 +165,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 16,
     paddingVertical: 12,
-    backgroundColor: darkColors.background,
+    backgroundColor: colors.background,
     borderBottomWidth: 1,
-    borderBottomColor: darkColors.border,
+    borderBottomColor: colors.border,
     zIndex: 10,
   },
   avatarContainer: {
@@ -189,24 +179,24 @@ const styles = StyleSheet.create({
   },
   greeting: {
     fontSize: 12,
-    color: darkColors.textSecondary,
+    color: colors.textSecondary,
     marginBottom: 2,
   },
   userName: {
     fontSize: 16,
     fontWeight: "600",
-    color: darkColors.textPrimary,
+    color: colors.textPrimary,
   },
   initialsContainer: {
     width: 44,
     height: 44,
     borderRadius: 22,
-    backgroundColor: darkColors.accent,
+    backgroundColor: colors.accent,
     justifyContent: "center",
     alignItems: "center",
   },
   initials: {
-    color: darkColors.textPrimary,
+    color: colors.textPrimary,
     fontSize: 16,
     fontWeight: "bold",
   },
@@ -223,17 +213,17 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 76, // Below the header
     left: 16,
-    backgroundColor: darkColors.cardBackground,
+    backgroundColor: colors.cardBackground,
     borderRadius: 8,
     width: 200,
     zIndex: 20,
-    shadowColor: darkColors.shadowColor,
+    shadowColor: colors.shadowColor,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 5,
     borderWidth: 1,
-    borderColor: darkColors.border,
+    borderColor: colors.border,
   },
   menuItem: {
     flexDirection: "row",
@@ -241,7 +231,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 16,
     borderBottomWidth: 1,
-    borderBottomColor: darkColors.border,
+    borderBottomColor: colors.border,
     gap: 16,
   },
   menuItemIcon: {
@@ -249,7 +239,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   menuItemText: {
-    color: darkColors.textPrimary,
+    color: colors.textPrimary,
     fontSize: 14,
   },
 });

@@ -9,7 +9,13 @@ import {
 } from "@/utils/asyncStore";
 import { transformSelctBoxData } from "@/utils/helper";
 import { useRouter } from "expo-router";
-import { Image, View, ScrollView, TextInput as TpRN } from "react-native";
+import {
+  Image,
+  View,
+  ScrollView,
+  TextInput as TpRN,
+  StyleSheet,
+} from "react-native";
 import { ResizeMode, Video } from "expo-av";
 import MyText from "@/components/Elements/MyText";
 import MyInput from "@/components/Elements/MyInput";
@@ -53,6 +59,7 @@ const Login = () => {
 
   const checkApiUrl = async () => {
     await getDataFromStorage("apiUrl").then((storageUrl: string | null) => {
+      setApiUrl(storageUrl || "");
       setHasApiUrl(!!storageUrl);
     });
   };
@@ -143,7 +150,6 @@ const Login = () => {
 
   const backToApiUrl = () => {
     setHasApiUrl(false);
-    setApiUrl("");
     removeDataFromStorage("apiUrl");
     resetForm();
   };
@@ -158,48 +164,21 @@ const Login = () => {
     <Layout hasHeader={false} fullWidth>
       <ScrollView
         keyboardShouldPersistTaps="handled"
-        contentContainerStyle={{
-          width: "100%",
-          height: "100%",
-          minHeight: 800,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          gap: 12,
-          paddingVertical: 32,
-        }}
+        contentContainerStyle={styles.scrollViewContent}
       >
         <Video
-          source={require("../assets/videos/login-background.mp4")} // Video URL'si
-          rate={0.8} // Video oynatma hızı
-          volume={1.0} // Ses seviyesi
-          isMuted={true} // Sessiz oynatma
-          resizeMode={ResizeMode.COVER} // Video boyutlandırma modu
-          shouldPlay // Videonun otomatik oynatılması için
-          isLooping // Videonun döngüde çalınması için
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            bottom: 0,
-            right: 0,
-            zIndex: -1,
-          }}
+          source={require("../assets/videos/login-background.mp4")}
+          rate={0.8}
+          volume={1.0}
+          isMuted={true}
+          resizeMode={ResizeMode.COVER}
+          shouldPlay
+          isLooping
+          style={styles.backgroundVideo}
         />
         <View>
-          <MyText style={{ paddingLeft: 33, fontSize: 24, fontWeight: 900 }}>
-            Giriş yapın
-          </MyText>
-          <View
-            style={{
-              backgroundColor: "rgba(20, 21, 24, 0.5)",
-              margin: 16,
-              marginTop: 10,
-              borderRadius: 8,
-              paddingVertical: 16,
-              paddingHorizontal: 32,
-            }}
-          >
+          <MyText style={styles.headerText}>Giriş yapın</MyText>
+          <View style={styles.formContainer}>
             {hasApiUrl && (
               <Ionicons
                 name="arrow-back"
@@ -209,32 +188,21 @@ const Login = () => {
               />
             )}
 
-            <View
-              style={{
-                width: "100%",
-                display: "flex",
-                alignItems: "center",
-                marginBottom: 27,
-              }}
-            >
+            <View style={styles.logoContainer}>
               <Image
                 source={require("../assets/images/workbook-terminal.png")}
-                style={{ width: 187 }}
+                style={styles.logo}
                 resizeMode="contain"
               />
             </View>
             {!hasApiUrl ? (
               <>
-                <MyText
-                  style={{ marginBottom: 42, fontSize: 14, fontWeight: 300 }}
-                >
+                <MyText style={styles.infoText}>
                   Bir kereliğine girilecek olan sunucu adresini giriniz.
                 </MyText>
-                <View
-                  style={{ marginVertical: "auto", display: "flex", gap: 12 }}
-                >
+                <View style={styles.formFieldsContainer}>
                   <MyInput
-                    theme={"light"}
+                    // theme={"light"}
                     placeholder="Örn: http://0.0.0.0:0"
                     label={"Sunucu Adresi"}
                     returnKeyType="done"
@@ -244,32 +212,26 @@ const Login = () => {
                     }}
                   />
                   <MyButton
-                    style={{ backgroundColor: "#16171A" }}
+                    style={styles.darkButton}
                     onPress={() => {
                       saveDataToStorage("apiUrl", apiUrl);
                       checkApiUrl();
                     }}
                   >
-                    <MyText style={{ fontWeight: 800, fontSize: 14 }}>
-                      Kaydet
-                    </MyText>
+                    <MyText style={styles.buttonText}>Kaydet</MyText>
                   </MyButton>
                 </View>
               </>
             ) : (
               <>
-                <MyText
-                  style={{ marginBottom: 42, fontSize: 16, fontWeight: 300 }}
-                >
+                <MyText style={styles.loginInfoText}>
                   Yöneticiniz tarafından size verilen giriş bilgilerini
                   kullanarak sisteme giriş yapabilirsiniz.
                 </MyText>
 
-                <View
-                  style={{ marginVertical: "auto", display: "flex", gap: 12 }}
-                >
+                <View style={styles.formFieldsContainer}>
                   <MyInput
-                    theme={"light"}
+                    // theme={"light"}
                     placeholder="Örn: ad.soyad"
                     label={"Kullanıcı Adı"}
                     returnKeyType="next"
@@ -281,7 +243,7 @@ const Login = () => {
                     onBlur={handleUserNameOnBlur}
                   />
                   <MyInput
-                    theme={"light"}
+                    // theme={"light"}
                     ref={passRef}
                     secureTextEntry={!showPassword}
                     label={"Şifre"}
@@ -293,21 +255,21 @@ const Login = () => {
                     }}
                     icons={
                       <MyButton
-                        style={{ width: 16, height: 16, marginRight: 16 }}
+                        style={styles.passwordToggleButton}
                         onPress={() => {
                           setShowPassword((x) => !x);
                         }}
                       >
                         <Image
                           source={icons[showPassword ? "eye" : "eye-hide"]}
-                          style={{ width: 16, height: 16 }}
+                          style={styles.passwordToggleIcon}
                           resizeMode="contain"
                         />
                       </MyButton>
                     }
                   />
                   <MyDropdown
-                    theme={"light"}
+                    // theme={"light"}
                     data={transformSelctBoxData(corporationDtos)}
                     placeholder="Şirket Seçiniz"
                     label="Şirket"
@@ -315,7 +277,7 @@ const Login = () => {
                     setValue={(x) => setCorpId(Number(x))}
                   />
                   <MyDropdown
-                    theme={"light"}
+                    // theme={"light"}
                     data={transformSelctBoxData(sectionDtos)}
                     placeholder="Şube Seçiniz"
                     label="Şube"
@@ -323,7 +285,7 @@ const Login = () => {
                     setValue={(x) => setSectionId(Number(x))}
                   />
                   <MyInput
-                    theme={"light"}
+                    // // theme={"light"}
                     value={year}
                     label={"Yıl"}
                     returnKeyType="next"
@@ -333,7 +295,7 @@ const Login = () => {
                     }}
                   />
                   <MyButton
-                    style={{ backgroundColor: "#16171A" }}
+                    style={styles.darkButton}
                     onPress={() => {
                       axiosPost({
                         path: "/Login/UserControl",
@@ -360,30 +322,99 @@ const Login = () => {
                       });
                     }}
                   >
-                    <MyText style={{ fontWeight: 800, fontSize: 14 }}>
-                      Giriş Yap
-                    </MyText>
+                    <MyText style={styles.buttonText}>Giriş Yap</MyText>
                   </MyButton>
                 </View>
               </>
             )}
           </View>
         </View>
-        <MyText
-          style={{
-            position: "absolute",
-            bottom: 24,
-            left: 0,
-            right: 0,
-            margin: "auto",
-            textAlign: "center",
-          }}
-        >
-          Powered By Odak İnovasyon
-        </MyText>
+        <MyText style={styles.footerText}>Powered By Odak İnovasyon</MyText>
       </ScrollView>
     </Layout>
   );
 };
+
+const styles = StyleSheet.create({
+  scrollViewContent: {
+    width: "100%",
+    height: "100%",
+    minHeight: 800,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    gap: 12,
+    paddingVertical: 32,
+  },
+  backgroundVideo: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+    zIndex: -1,
+  },
+  headerText: {
+    paddingLeft: 33,
+    fontSize: 24,
+    fontWeight: "900",
+  },
+  formContainer: {
+    backgroundColor: "rgba(20, 21, 24, 0.5)",
+    margin: 16,
+    marginTop: 10,
+    borderRadius: 8,
+    paddingVertical: 16,
+    paddingHorizontal: 32,
+  },
+  logoContainer: {
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    marginBottom: 27,
+  },
+  logo: {
+    width: 187,
+  },
+  infoText: {
+    marginBottom: 42,
+    fontSize: 14,
+    fontWeight: "300",
+  },
+  loginInfoText: {
+    marginBottom: 42,
+    fontSize: 16,
+    fontWeight: "300",
+  },
+  formFieldsContainer: {
+    marginVertical: "auto",
+    display: "flex",
+    gap: 12,
+  },
+  darkButton: {
+    backgroundColor: "#16171A",
+  },
+  buttonText: {
+    fontWeight: "800",
+    fontSize: 14,
+  },
+  passwordToggleButton: {
+    width: 16,
+    height: 16,
+    marginRight: 16,
+  },
+  passwordToggleIcon: {
+    width: 16,
+    height: 16,
+  },
+  footerText: {
+    position: "absolute",
+    bottom: 24,
+    left: 0,
+    right: 0,
+    margin: "auto",
+    textAlign: "center",
+  },
+});
 
 export default Login;
