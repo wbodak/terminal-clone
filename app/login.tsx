@@ -260,11 +260,11 @@ const Login = () => {
                           setShowPassword((x) => !x);
                         }}
                       >
-                        <Image
-                          source={icons[showPassword ? "eye" : "eye-hide"]}
-                          style={styles.passwordToggleIcon}
-                          resizeMode="contain"
-                        />
+                        {showPassword ? (
+                          <Ionicons name="eye" color={"gray"} size={18} />
+                        ) : (
+                          <Ionicons name="eye-off" color={"gray"} size={18} />
+                        )}
                       </MyButton>
                     }
                   />
@@ -399,9 +399,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   passwordToggleButton: {
-    width: 16,
-    height: 16,
+    // width: 16,
+    // height: 16,
     marginRight: 16,
+    // color: "white",
   },
   passwordToggleIcon: {
     width: 16,

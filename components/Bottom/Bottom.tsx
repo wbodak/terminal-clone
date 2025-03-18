@@ -81,7 +81,7 @@ const Bottom = ({
 
 const styles = StyleSheet.create({
   actionContainer: {
-    backgroundColor: "#262B30",
+    backgroundColor: "#132C1B",
     paddingVertical: 6,
     paddingHorizontal: 16,
     borderTopWidth: 1,
@@ -91,6 +91,8 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: -2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
+    position: "absolute",
+    bottom: 0,
   },
   approvedContainer: {
     backgroundColor: "#132C1B",
@@ -101,6 +103,8 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: -2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
+    position: "absolute",
+    bottom: 0,
   },
   buttonsRow: {
     display: "flex",

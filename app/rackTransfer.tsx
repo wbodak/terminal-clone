@@ -10,7 +10,7 @@ import { getDataFromStorage } from "@/utils/asyncStore";
 import { transformSelctBoxData } from "@/utils/helper";
 import { useFocusEffect, useLocalSearchParams } from "expo-router";
 import React, { useCallback, useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 
 type DataType = {
   sourceStore?: number;
@@ -64,6 +64,7 @@ const RackTransfer = () => {
     <Layout
       headerTitle={data.title as string}
       headerDescription="Açıklama Girilecek"
+      scrollEnabled={false}
       bottomProps={{
         saveProps: {
           disabled: !formState.sourceStore,
@@ -95,6 +96,8 @@ const RackTransfer = () => {
       </View>
       <SectionTitle title={`${data.title} Listesi`} />
       <MyDataGrid
+        containerStyle={{ flex: 1, marginVertical: 10, paddingHorizontal: 16 }}
+        gridStyle={{ maxHeight: "100%", flex: 1, marginVertical: 10 }}
         deletePath="/Stock/DeleteStockMaster"
         editPage={"rackTransfer-detail"}
         columns={[

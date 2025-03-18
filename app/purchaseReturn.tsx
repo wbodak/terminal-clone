@@ -44,8 +44,6 @@ const PurchaseReturn = () => {
   }, []);
 
   useEffect(() => {
-    console.log("hocam*******", pageData?.purchaseReturn?.data);
-
     if (pageData?.purchaseReturn?.data?.length > 0) {
       setFormState({
         ...formState,

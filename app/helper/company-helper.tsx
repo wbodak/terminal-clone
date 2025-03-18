@@ -102,6 +102,14 @@ const CompanyHelper = () => {
           { dataField: "COMPANY_NAME", caption: "Firma Adı" },
           { dataField: "COMPANY_TAXNO", caption: "V.D. No" },
         ]}
+        detailColumns={[
+          { dataField: "COMPANY_CODE", caption: "Firma No" },
+          { dataField: "COMPANY_NAME", caption: "Firma Adı" },
+          { dataField: "COMPANY_TAXNO", caption: "V.D. No" },
+          { dataField: "COMPANY_ADDRESS", caption: "Adres" },
+          { dataField: "COMPANY_EINVOICE", caption: "E-Fatura" },
+          { dataField: "COMPANY_TAXOFFICE", caption: "Vergi yeri" },
+        ]}
         data={companies}
         onSelect={(selectedRowsData: any) => {
           setPageData("purchaseReturn", selectedRowsData);

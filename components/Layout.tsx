@@ -18,6 +18,7 @@ type Props = {
   bottomProps?: BottomProps;
   fullWidth?: boolean;
   barcodeButton?: boolean;
+  scrollEnabled?: boolean;
 };
 const Layout = ({
   children,
@@ -28,6 +29,7 @@ const Layout = ({
   showSubTitle = true,
   bottomProps,
   barcodeButton = false,
+  scrollEnabled = true,
 }: Props) => {
   const insets = useSafeAreaInsets();
   const styles = StyleSheet.create({
@@ -75,25 +77,48 @@ const Layout = ({
           backButtonEnable={headerBackButtonEnable}
         />
       )}
-      <ScrollView keyboardShouldPersistTaps="handled">
-        {hasHeader && showSubTitle && (
-          <>
-            <MyText style={{ fontSize: 12, paddingHorizontal: 16 }}>
-              {headerTitle} Bilgileri
-            </MyText>
-            <View
-              style={{
-                width: "100%",
-                height: 1,
-                marginTop: 4,
-                marginBottom: 8,
-                backgroundColor: "#313236",
-              }}
-            />
-          </>
-        )}
-        {children}
-      </ScrollView>
+      {scrollEnabled ? (
+        <ScrollView keyboardShouldPersistTaps="handled">
+          {hasHeader && showSubTitle && (
+            <>
+              <MyText style={{ fontSize: 12, paddingHorizontal: 16 }}>
+                {headerTitle} Bilgileri
+              </MyText>
+              <View
+                style={{
+                  width: "100%",
+                  height: 1,
+                  marginTop: 4,
+                  marginBottom: 8,
+                  backgroundColor: "#313236",
+                }}
+              />
+            </>
+          )}
+          {children}
+        </ScrollView>
+      ) : (
+        <View>
+          {hasHeader && showSubTitle && (
+            <>
+              <MyText style={{ fontSize: 12, paddingHorizontal: 16 }}>
+                {headerTitle} Bilgileri
+              </MyText>
+              <View
+                style={{
+                  width: "100%",
+                  height: 1,
+                  marginTop: 4,
+                  marginBottom: 8,
+                  backgroundColor: "#313236",
+                }}
+              />
+            </>
+          )}
+          {children}
+        </View>
+      )}
+
       {barcodeButton && (
         <FAB
           icon={() => (

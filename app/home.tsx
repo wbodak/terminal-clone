@@ -2,13 +2,9 @@ import React, { useEffect, useState, useRef } from "react";
 import {
   Image,
   View,
-  Dimensions,
   StyleSheet,
   TouchableOpacity,
   Animated,
-  Modal,
-  FlatList,
-  Alert,
 } from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -27,7 +23,6 @@ import { WebUserDto } from "@/types/dtos/WebUserDto";
 import { useRouter } from "expo-router";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { useGlobalContext } from "@/hooks/useGlobalContext";
-import MyButton from "@/components/Elements/MyButton";
 import { bgColors, colors } from "@/constants/Colors";
 
 const Home = () => {

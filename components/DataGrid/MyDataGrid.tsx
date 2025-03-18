@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import {
   View,
-  ScrollView,
   FlatList,
   Image,
   StyleProp,
   ViewStyle,
   StyleSheet,
+  Vibration,
+  TouchableOpacity,
 } from "react-native";
-import { DataTable } from "react-native-paper";
+import { DataTable, Icon } from "react-native-paper";
 import MyText from "../Elements/MyText";
 import { DeleteButton, EditButton, SelectButton } from "./gridButtons";
 import { V_StockMaster } from "@/types/db/V_StockMaster";
@@ -20,7 +21,14 @@ import { useDebounce } from "@/hooks/useDebaounce";
 import useStore from "@/store/useStore";
 import { colors } from "@/constants/Colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
-
+import CustomModal from "../CustomModal/CustomModal";
+import {
+  GestureDetector,
+  GestureHandlerRootView,
+  Swipeable,
+} from "react-native-gesture-handler";
+import Feather from "@expo/vector-icons/Feather";
+import AntDesign from "@expo/vector-icons/AntDesign";
 type Column = {
   dataField: string;
   caption: string;
@@ -45,6 +53,7 @@ type Props = {
   gridStyle?: StyleProp<ViewStyle>;
   containerStyle?: StyleProp<ViewStyle>;
   multiple?: boolean;
+  detailColumns?: any;
 };
 
 const MyDataGrid = ({
@@ -60,15 +69,18 @@ const MyDataGrid = ({
   gridStyle,
   containerStyle,
   multiple = false,
+  detailColumns,
 }: Props) => {
   const { showSnackeBar } = useGlobalContext();
   const [tableData, setTableData] = useState<any>(data.slice(0, 15));
   const [keyword, setKeyword] = useState("");
   // const debaouncedValue = useDebounce(keyword, 300);
   const [selectedItems, setSelectedItems] = useState<any[]>([]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedTableItem, setSelectedTableItem] = useState(undefined);
 
   const handleSelect = (tableItem: any) => {
-    const isExist = selectedItems.find((item: any) => item.ID === tableItem.ID);
+    const isExist = selectedItems.some((item: any) => item.ID === tableItem.ID);
     if (multiple) {
       if (isExist) {
         setSelectedItems((prev) =>
@@ -78,6 +90,10 @@ const MyDataGrid = ({
         setSelectedItems((prev) => [...prev, tableItem]);
       }
     } else {
+      if (isExist) {
+        setSelectedItems([]);
+        return;
+      }
       setSelectedItems([tableItem]);
     }
   };
@@ -115,16 +131,8 @@ const MyDataGrid = ({
 
   return (
     <>
-      {data.length == 0 ? (
-        <View
-          style={{
-            flex: 1,
-            height: 200,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
+      {data.length === 0 ? (
+        <View style={styles.emptyDataContainer}>
           <Image
             source={icons["not-found"]}
             style={{ width: 64, height: 64, marginBottom: 12 }}
@@ -133,20 +141,20 @@ const MyDataGrid = ({
           <MyText>Kayıtlı veri bulunamadı</MyText>
         </View>
       ) : (
-        <View style={[containerStyle]}>
+        <View style={[{ flex: 1 }, gridStyle]}>
           {!!searchedField && (
             <MyInput
-              label={"Arama"}
-              containerStyle={{ flex: 1, maxHeight: 48, marginTop: 12 }}
+              label="Arama"
+              containerStyle={{
+                marginTop: 12,
+              }}
               returnKeyType="next"
               value={keyword}
-              onChangeText={(text) => {
-                setKeyword(text);
-              }}
+              onChangeText={setKeyword}
             />
           )}
-          <View style={[{ flex: 1, maxHeight: 300 }, gridStyle]}>
-            <ScrollView horizontal nestedScrollEnabled>
+          <View style={[{ flex: 1, minHeight: 200 }, gridStyle]}>
+            <GestureHandlerRootView>
               <FlatList
                 nestedScrollEnabled
                 data={tableData}
@@ -166,6 +174,39 @@ const MyDataGrid = ({
                   </DataTable.Header>
                 }
                 renderItem={(item) => {
+                  const renderActions = () => {
+                    return (
+                      <View style={styles.acionButtonsContainer}>
+                        <TouchableOpacity>
+                          {/* <Feather
+                            name="edit"
+                            size={24}
+                            color={colors.accent}
+                          /> */}
+                          {editPage && (
+                            <EditButton
+                              editPage={editPage}
+                              data={editPageProps}
+                            />
+                          )}
+                        </TouchableOpacity>
+                        <TouchableOpacity>
+                          {deletePath && (
+                            <DeleteButton
+                              deletePath={deletePath}
+                              queryParams={deleteQueryParams}
+                              masterId={item.item.ID}
+                              onScuccess={() =>
+                                deleteRowFromState(item.item.ID)
+                              }
+                            />
+                          )}
+                          {/* <AntDesign name="delete" size={24} color="red" /> */}
+                        </TouchableOpacity>
+                      </View>
+                    );
+                  };
+
                   const columnValues = visibleColumns.map((column) => {
                     if (Object.keys(item.item).includes(column.dataField)) {
                       return {
@@ -188,18 +229,24 @@ const MyDataGrid = ({
                     editPageProps[f.targetField] = item.item[f.sourceField];
                   });
                   return (
-                    <DataTable.Row
-                      key={item.index}
-                      style={
-                        isSelected(item.item.ID)
-                          ? styles.selectedRow
-                          : styles.row
-                      }
-                      onPress={() => {
-                        handleSelect(item.item);
-                      }}
-                    >
-                      {/* {(editPage || deletePath || onSelect) && (
+                    <Swipeable renderRightActions={renderActions}>
+                      <DataTable.Row
+                        onLongPress={() => {
+                          Vibration.vibrate();
+                          setModalVisible(true);
+                          setSelectedTableItem(item.item);
+                        }}
+                        key={item.index}
+                        style={
+                          isSelected(item.item.ID)
+                            ? styles.selectedRow
+                            : styles.row
+                        }
+                        onPress={() => {
+                          handleSelect(item.item);
+                        }}
+                      >
+                        {/* {(editPage || deletePath || onSelect) && (
                         <DataTable.Title
                           style={{
                             marginRight: 10,
@@ -240,31 +287,32 @@ const MyDataGrid = ({
                           </View>
                         </DataTable.Title>
                       )} */}
-                      {columnValues.map((column: any, j) => {
-                        return (
-                          <DataTable.Title
-                            key={Math.random()}
-                            style={{
-                              marginRight: 10,
-                              marginVertical: "auto",
-                              flex: 2,
-                              width: column?.width || 100,
-                            }}
-                          >
-                            <MyText
-                              ellipsizeMode="tail"
-                              style={{ fontSize: 14 }}
+                        {columnValues.map((column: any, j) => {
+                          return (
+                            <DataTable.Title
+                              key={Math.random()}
+                              style={{
+                                marginRight: 10,
+                                marginVertical: "auto",
+                                flex: 2,
+                                width: column?.width || 100,
+                              }}
                             >
-                              {column?.value}
-                            </MyText>
-                          </DataTable.Title>
-                        );
-                      })}
-                    </DataTable.Row>
+                              <MyText
+                                ellipsizeMode="tail"
+                                style={{ fontSize: 14 }}
+                              >
+                                {column?.value}
+                              </MyText>
+                            </DataTable.Title>
+                          );
+                        })}
+                      </DataTable.Row>
+                    </Swipeable>
                   );
                 }}
               />
-            </ScrollView>
+            </GestureHandlerRootView>
             {!!onSelect && (
               <View
                 style={{
@@ -311,18 +359,35 @@ const MyDataGrid = ({
           </View>
         </View>
       )}
+      {modalVisible && detailColumns && (
+        <CustomModal
+          detailColumns={detailColumns}
+          selectedTableItem={selectedTableItem}
+          isOpen={modalVisible}
+          handleClose={() => setModalVisible(false)}
+        />
+      )}
     </>
   );
 };
 
 const styles = StyleSheet.create({
   row: {
-    backgroundColor: "unset",
-    borderRadius: 16,
+    backgroundColor: "transparent",
   },
   selectedRow: {
     backgroundColor: colors.accent,
-    borderRadius: 16,
+  },
+  acionButtonsContainer: {
+    flexDirection: "row",
+    gap: 4,
+    alignItems: "center",
+  },
+  emptyDataContainer: {
+    flexGrow: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingVertical: 20,
   },
 });
 
