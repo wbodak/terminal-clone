@@ -96,8 +96,6 @@ const RackTransfer = () => {
       </View>
       <SectionTitle title={`${data.title} Listesi`} />
       <MyDataGrid
-        containerStyle={{ flex: 1, marginVertical: 10, paddingHorizontal: 16 }}
-        gridStyle={{ maxHeight: "100%", flex: 1, marginVertical: 10 }}
         deletePath="/Stock/DeleteStockMaster"
         editPage={"rackTransfer-detail"}
         columns={[

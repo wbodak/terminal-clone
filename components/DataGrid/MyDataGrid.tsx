@@ -25,6 +25,7 @@ import CustomModal from "../CustomModal/CustomModal";
 import {
   GestureDetector,
   GestureHandlerRootView,
+  ScrollView,
   Swipeable,
 } from "react-native-gesture-handler";
 import Feather from "@expo/vector-icons/Feather";
@@ -74,7 +75,7 @@ const MyDataGrid = ({
   const { showSnackeBar } = useGlobalContext();
   const [tableData, setTableData] = useState<any>(data.slice(0, 15));
   const [keyword, setKeyword] = useState("");
-  // const debaouncedValue = useDebounce(keyword, 300);
+
   const [selectedItems, setSelectedItems] = useState<any[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedTableItem, setSelectedTableItem] = useState(undefined);
@@ -141,7 +142,7 @@ const MyDataGrid = ({
           <MyText>Kayıtlı veri bulunamadı</MyText>
         </View>
       ) : (
-        <View style={[{ flex: 1 }, gridStyle]}>
+        <View style={[{ width: "100%", height: "80%" }, gridStyle]}>
           {!!searchedField && (
             <MyInput
               label="Arama"
@@ -153,10 +154,17 @@ const MyDataGrid = ({
               onChangeText={setKeyword}
             />
           )}
-          <View style={[{ flex: 1, minHeight: 200 }, gridStyle]}>
-            <GestureHandlerRootView>
+          <GestureHandlerRootView
+            style={{
+              flex: 1, // Change from flexGrow to flex
+              height: "100%", // Add explicit height
+            }}
+          >
+            <ScrollView>
               <FlatList
-                nestedScrollEnabled
+                style={{ flex: 1 }} // Uncomment this
+                contentContainerStyle={{ flexGrow: 1 }}
+                scrollEnabled={false}
                 data={tableData}
                 keyExtractor={(_) => Math.random().toString()}
                 ListHeaderComponent={
@@ -231,12 +239,12 @@ const MyDataGrid = ({
                   return (
                     <Swipeable renderRightActions={renderActions}>
                       <DataTable.Row
+                        key={item.index}
                         onLongPress={() => {
                           Vibration.vibrate();
                           setModalVisible(true);
                           setSelectedTableItem(item.item);
                         }}
-                        key={item.index}
                         style={
                           isSelected(item.item.ID)
                             ? styles.selectedRow
@@ -312,51 +320,51 @@ const MyDataGrid = ({
                   );
                 }}
               />
-            </GestureHandlerRootView>
-            {!!onSelect && (
-              <View
-                style={{
-                  display: "flex",
-                  alignItems: "flex-end",
+            </ScrollView>
+          </GestureHandlerRootView>
+          {!!onSelect && (
+            <View
+              style={{
+                display: "flex",
+                alignItems: "flex-end",
+              }}
+            >
+              <MyButton
+                containerStyle={{
+                  width: "100%",
+                }}
+                style={{ backgroundColor: "green" }}
+                onPress={() => {
+                  if (selectedItems.length == 0) {
+                    showSnackeBar({
+                      dialogName: "Dlg_ErrorProcess",
+                      message: "Lütfen bir seçim yapınız.",
+                    });
+                    return;
+                  } else {
+                    onSelect({
+                      data: selectedItems,
+                    });
+                  }
                 }}
               >
-                <MyButton
-                  containerStyle={{
-                    width: "100%",
-                  }}
-                  style={{ backgroundColor: "green" }}
-                  onPress={() => {
-                    if (selectedItems.length == 0) {
-                      showSnackeBar({
-                        dialogName: "Dlg_ErrorProcess",
-                        message: "Lütfen bir seçim yapınız.",
-                      });
-                      return;
-                    } else {
-                      onSelect({
-                        data: selectedItems,
-                      });
-                    }
+                <View
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    gap: 8,
                   }}
                 >
-                  <View
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      gap: 8,
-                    }}
-                  >
-                    <Ionicons name="checkmark-circle" size={24} color="white" />
-                    <MyText style={{ fontSize: 16, fontWeight: "bold" }}>
-                      Tamam
-                    </MyText>
-                  </View>
-                </MyButton>
-              </View>
-            )}
-          </View>
+                  <Ionicons name="checkmark-circle" size={24} color="white" />
+                  <MyText style={{ fontSize: 16, fontWeight: "bold" }}>
+                    Tamam
+                  </MyText>
+                </View>
+              </MyButton>
+            </View>
+          )}
         </View>
       )}
       {modalVisible && detailColumns && (
