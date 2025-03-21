@@ -2,6 +2,7 @@ import React, { forwardRef } from "react";
 import MyInput from "../Elements/MyInput";
 import { icons } from "@/assets/icons";
 import { IconButton } from "react-native-paper";
+import { View } from "react-native";
 
 type Props = {
   value?: string;
@@ -39,7 +40,14 @@ const InputBarcode = forwardRef<any, Props>(
         value={value}
         onSubmitEditing={onSearchButton}
         icons={
-          <>
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              flex: 1,
+              alignItems: "center",
+            }}
+          >
             <IconButton
               icon={icons.cross}
               size={16}
@@ -54,7 +62,7 @@ const InputBarcode = forwardRef<any, Props>(
               iconColor="#4875FF"
               onPress={onSearchButton}
             />
-          </>
+          </View>
         }
       />
     );

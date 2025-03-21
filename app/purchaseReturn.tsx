@@ -101,7 +101,7 @@ const PurchaseReturn = () => {
           value={formState.companyName}
           icons={
             <MyButton
-              style={{ width: 16, height: 16, marginRight: 16 }}
+              style={{ marginRight: 16 }}
               onPress={() => {
                 router.push("/helper/company-helper");
               }}

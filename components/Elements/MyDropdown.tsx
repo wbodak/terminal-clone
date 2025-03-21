@@ -1,132 +1,183 @@
-import { SelectBoxDto } from '@/types/dtos/SelectBoxDto'
-import React from 'react'
-import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
-import { Dropdown as DropdownComp } from 'react-native-element-dropdown'
-import MyText from './MyText'
+import { SelectBoxDto } from "@/types/dtos/SelectBoxDto";
+import React, { useState } from "react";
+import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import { Dropdown as DropdownComp } from "react-native-element-dropdown";
+import MyText from "./MyText";
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
+import { colors } from "@/constants/Colors";
 
 type Props = {
-  value: number | SelectBoxDto | boolean
-  setValue: (value: any) => void
-  label: string
-  placeholder: string
-  data: SelectBoxDto[]
-  theme?: 'dark' | 'light'
-  containerStyle?: StyleProp<ViewStyle>
-}
+  value: number | SelectBoxDto | boolean;
+  setValue: (value: any) => void;
+  label: string;
+  placeholder: string;
+  data: SelectBoxDto[];
+  theme?: "dark" | "light";
+  containerStyle?: StyleProp<ViewStyle>;
+  disabled?: boolean;
+};
 
-const MyDropdown = ({ placeholder, label, value, setValue, data, theme = 'dark', containerStyle }: Props) => {
-  const styles = theme === 'dark' ? darkStyles : lightStyles
+const MyDropdown = ({
+  placeholder,
+  label,
+  value,
+  setValue,
+  data,
+  theme = "dark",
+  containerStyle,
+  disabled = false,
+}: Props) => {
+  const [isFocused, setIsFocused] = useState(false);
+  const borderColor = useSharedValue("#444");
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    borderColor: borderColor.value,
+    backgroundColor: theme === "dark" ? "#2A2A32" : "#F5F5F5",
+  }));
 
   return (
-    <View style={[styles.wrapper, containerStyle]}>
-      <MyText style={[styles.label]}>{label}:</MyText>
+    <Animated.View
+      style={[
+        styles.wrapper,
+        containerStyle,
+        animatedStyle,
+        disabled && styles.disabledContainer,
+      ]}
+    >
+      <MyText
+        style={[
+          styles.label,
+          isFocused ? styles.focusedLabel : {},
+          disabled && styles.disabledLabel,
+        ]}
+      >
+        {label}
+      </MyText>
+
       <DropdownComp
         selectedTextProps={{ numberOfLines: 1 }}
-        style={[styles.dropdown]}
+        style={styles.dropdown}
         placeholderStyle={styles.placeholderStyle}
-        iconStyle={{ marginBottom: 10 }}
-        selectedTextStyle={styles.selectedTextStyle}
-        containerStyle={{ borderWidth: 0 }}
+        iconStyle={styles.iconStyle}
+        selectedTextStyle={[
+          styles.selectedTextStyle,
+          disabled && styles.disabledText,
+        ]}
+        containerStyle={styles.dropdownContainer}
         itemContainerStyle={styles.itemContainer}
-        itemTextStyle={{ fontSize: 14 }}
-        renderItem={item => <MyText style={styles.item}>{item.text}</MyText>}
+        itemTextStyle={styles.itemTextStyle}
+        renderItem={(item) => (
+          <MyText
+            style={[styles.item, value === item.value && styles.selectedItem]}
+          >
+            {item.text}
+          </MyText>
+        )}
         placeholder={placeholder}
         data={data}
-        labelField='text'
-        valueField='value'
-        value={data.find(x => x.value === value)}
-        onChange={item => {
-          setValue(item.value)
+        labelField="text"
+        valueField="value"
+        value={data.find((x) => x.value === value)}
+        onChange={(item) => {
+          setValue(item.value);
+        }}
+        disable={disabled}
+        onFocus={() => {
+          setIsFocused(true);
+          borderColor.value = withTiming(colors.accent, { duration: 200 });
+        }}
+        onBlur={() => {
+          setIsFocused(false);
+          borderColor.value = withTiming("#444", { duration: 200 });
         }}
       />
-    </View>
-  )
-}
+    </Animated.View>
+  );
+};
 
-export default MyDropdown
-
-const lightStyles = StyleSheet.create({
-  wrapper: { position: 'relative', height: 48 },
+const styles = StyleSheet.create({
+  wrapper: {
+    position: "relative",
+    borderRadius: 8,
+    borderWidth: 1,
+    overflow: "hidden",
+    minHeight: 56,
+  },
   dropdown: {
-    backgroundColor: 'white',
-    height: 48,
-    borderRadius: 4,
-    paddingBottom: 8,
-    paddingTop: 24,
-    paddingHorizontal: 16
-  },
-  label: {
-    letterSpacing: 0.15,
-    zIndex: 1,
-    position: 'absolute',
-    top: 8,
-    left: 16,
-    fontSize: 10,
-    fontWeight: '700',
-    color: 'black'
-  },
-  placeholderStyle: {
-    fontFamily: 'Inter',
-    fontSize: 14
-  },
-  selectedTextStyle: {
-    fontFamily: 'Inter',
-    fontSize: 14,
-    overflow: 'hidden'
-  },
-  item: {
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    color: 'black'
-  },
-  itemContainer: {
-    backgroundColor: 'white'
-  }
-})
-
-const darkStyles = StyleSheet.create({
-  wrapper: { position: 'relative', height: 48 },
-  dropdown: {
-    backgroundColor: '#262B30',
-    height: 48,
-    borderRadius: 4,
-    paddingBottom: 8,
-    paddingTop: 24,
-    paddingHorizontal: 16
-  },
-  label: {
-    letterSpacing: 0.15,
-    zIndex: 1,
-    position: 'absolute',
-    top: 8,
-    left: 16,
-    fontSize: 10,
-    fontWeight: '700',
-    color: 'white'
-  },
-  placeholderStyle: {
-    fontFamily: 'Inter',
-    fontSize: 14,
-    color: '#99A0A3'
-  },
-  selectedTextStyle: {
-    fontFamily: 'Inter',
-    fontSize: 14,
-    color: 'white',
-    overflow: 'hidden'
-  },
-  item: {
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    color: 'white',
-    backgroundColor: '#262B30',
+    height: 56,
     borderWidth: 0,
-    margin: 0,
-    borderColor: 'white'
+    paddingBottom: 8,
+    paddingTop: 28,
+    paddingHorizontal: 16,
+    backgroundColor: "transparent",
+  },
+  disabledContainer: {
+    backgroundColor: "#222228",
+    borderColor: "#3A3A42",
+    opacity: 0.9,
+  },
+  label: {
+    position: "absolute",
+    top: 8,
+    left: 16,
+    fontSize: 12,
+    fontWeight: "500",
+    color: "#9AA2B0",
+    zIndex: 1,
+  },
+  focusedLabel: {
+    color: colors.accent,
+  },
+  disabledLabel: {
+    color: "#666",
+  },
+  placeholderStyle: {
+    fontFamily: "Inter",
+    fontSize: 14,
+    color: "#666",
+  },
+  selectedTextStyle: {
+    fontFamily: "Inter",
+    fontSize: 14,
+    color: "#FFFFFF",
+    overflow: "hidden",
+  },
+  disabledText: {
+    color: "#777",
+  },
+  item: {
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    color: "white",
+  },
+  selectedItem: {
+    backgroundColor: colors.accent,
   },
   itemContainer: {
-    padding: 0,
-    backgroundColor: '#262B30',
-    borderWidth: 0
-  }
-})
+    backgroundColor: "#2A2A32",
+    borderWidth: 0,
+    borderRadius: 8,
+    marginTop: 4,
+  },
+  itemTextStyle: {
+    fontSize: 14,
+    color: "white",
+    fontFamily: "Inter",
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+    marginRight: 4,
+  },
+  dropdownContainer: {
+    borderWidth: 0,
+    borderRadius: 8,
+    backgroundColor: "#2A2A32",
+  },
+});
+
+export default MyDropdown;
