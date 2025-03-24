@@ -131,7 +131,7 @@ const Home = () => {
                 });
               }}
             >
-              <AntDesign name="logout" size={32} color="#CCCCCC" />
+              <AntDesign name="logout" size={24} color="#CCCCCC" />
               <MyText style={styles.menuItemText}>Çıkış Yap</MyText>
             </TouchableOpacity>
           </View>
@@ -173,14 +173,14 @@ const styles = StyleSheet.create({
     marginLeft: 12,
   },
   greeting: {
-    fontSize: 12,
+    fontSize: 10,
     color: colors.textSecondary,
     marginBottom: 2,
   },
   userName: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: "600",
-    color: colors.textPrimary,
+    color: colors.white,
   },
   initialsContainer: {
     width: 44,
@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   initials: {
-    color: colors.textPrimary,
+    color: colors.white,
     fontSize: 16,
     fontWeight: "bold",
   },
@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
     left: 16,
     backgroundColor: colors.cardBackground,
     borderRadius: 8,
-    width: 200,
+    width: 180,
     zIndex: 20,
     shadowColor: colors.shadowColor,
     shadowOffset: { width: 0, height: 4 },
@@ -234,8 +234,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   menuItemText: {
-    color: colors.textPrimary,
-    fontSize: 14,
+    color: colors.white,
+    fontSize: 12,
   },
 });
 

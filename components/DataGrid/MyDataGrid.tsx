@@ -209,12 +209,10 @@ const MyDataGrid = ({
                               }
                             />
                           )}
-                          {/* <AntDesign name="delete" size={24} color="red" /> */}
                         </TouchableOpacity>
                       </View>
                     );
                   };
-
                   const columnValues = visibleColumns.map((column) => {
                     if (Object.keys(item.item).includes(column.dataField)) {
                       return {
@@ -245,62 +243,21 @@ const MyDataGrid = ({
                           setModalVisible(true);
                           setSelectedTableItem(item.item);
                         }}
-                        style={
+                        style={[
                           isSelected(item.item.ID)
                             ? styles.selectedRow
-                            : styles.row
-                        }
+                            : styles.row,
+                        ]}
                         onPress={() => {
                           handleSelect(item.item);
                         }}
                       >
-                        {/* {(editPage || deletePath || onSelect) && (
-                        <DataTable.Title
-                          style={{
-                            marginRight: 10,
-                            marginTop: 5,
-                            display: "flex",
-                            flexDirection: "row",
-                            width: 75,
-                            padding: 0,
-                          }}
-                        >
-                          <View
-                            style={{
-                              display: "flex",
-                              flexDirection: "row",
-                              height: "100%",
-                              justifyContent: "flex-start",
-                              marginTop: 10,
-                              alignItems: "center",
-                              gap: 10,
-                            }}
-                          >
-                            {deletePath && (
-                              <DeleteButton
-                                deletePath={deletePath}
-                                queryParams={deleteQueryParams}
-                                masterId={item.item.ID}
-                                onScuccess={() =>
-                                  deleteRowFromState(item.item.ID)
-                                }
-                              />
-                            )}
-                            {editPage && (
-                              <EditButton
-                                editPage={editPage}
-                                data={editPageProps}
-                              />
-                            )}
-                          </View>
-                        </DataTable.Title>
-                      )} */}
                         {columnValues.map((column: any, j) => {
                           return (
                             <DataTable.Title
                               key={Math.random()}
                               style={{
-                                marginRight: 10,
+                                marginRight: 2,
                                 marginVertical: "auto",
                                 flex: 2,
                                 width: column?.width || 100,
@@ -308,7 +265,7 @@ const MyDataGrid = ({
                             >
                               <MyText
                                 ellipsizeMode="tail"
-                                style={{ fontSize: 14 }}
+                                style={{ fontSize: 12 }}
                               >
                                 {column?.value}
                               </MyText>

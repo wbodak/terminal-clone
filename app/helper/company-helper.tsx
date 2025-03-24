@@ -98,9 +98,10 @@ const CompanyHelper = () => {
         containerStyle={{ flex: 1, marginVertical: 10, paddingHorizontal: 16 }}
         gridStyle={{ maxHeight: "100%", flex: 1, marginVertical: 10 }}
         columns={[
-          { dataField: "COMPANY_CODE", caption: "Firma No" },
+          { dataField: "COMPANY_CODE", caption: "Firma No", width: 100 },
           { dataField: "COMPANY_NAME", caption: "Firma Adı" },
           { dataField: "COMPANY_TAXNO", caption: "V.D. No" },
+          { dataField: "COMPANY_TAXOFFICE", caption: "Vergi yeri" },
         ]}
         detailColumns={[
           { dataField: "COMPANY_CODE", caption: "Firma No" },

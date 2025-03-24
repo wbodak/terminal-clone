@@ -45,15 +45,16 @@ const styles = StyleSheet.create({
   menuTitle: {
     borderBottomWidth: 1,
     borderColor: "#313236",
-    paddingBottom: 5,
+    paddingBottom: 4,
+    fontSize: 12,
   },
   menuList: {
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
-    gap: 12,
-    marginTop: 16,
-    marginBottom: 26,
+    gap: 8,
+    marginTop: 8,
+    marginBottom: 12,
   },
   menuItemWrapper: {
     width: "48%",

@@ -1,14 +1,14 @@
-import { SelectBoxDto } from "@/types/dtos/SelectBoxDto";
 import React, { useState } from "react";
-import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import { StyleProp, StyleSheet, ViewStyle } from "react-native";
 import { Dropdown as DropdownComp } from "react-native-element-dropdown";
-import MyText from "./MyText";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
 import { colors } from "@/constants/Colors";
+import MyText from "./MyText";
+import { SelectBoxDto } from "@/types/dtos/SelectBoxDto";
 
 type Props = {
   value: number | SelectBoxDto | boolean;
@@ -32,12 +32,22 @@ const MyDropdown = ({
   disabled = false,
 }: Props) => {
   const [isFocused, setIsFocused] = useState(false);
-  const borderColor = useSharedValue("#444");
+  const borderColor = useSharedValue(colors.border);
 
   const animatedStyle = useAnimatedStyle(() => ({
     borderColor: borderColor.value,
-    backgroundColor: theme === "dark" ? "#2A2A32" : "#F5F5F5",
+    backgroundColor: colors.dark,
   }));
+
+  const handleFocus = () => {
+    setIsFocused(true);
+    borderColor.value = withTiming(colors.accent, { duration: 200 });
+  };
+
+  const handleBlur = () => {
+    setIsFocused(false);
+    borderColor.value = withTiming(colors.border, { duration: 200 });
+  };
 
   return (
     <Animated.View
@@ -51,7 +61,7 @@ const MyDropdown = ({
       <MyText
         style={[
           styles.label,
-          isFocused ? styles.focusedLabel : {},
+          isFocused && styles.focusedLabel,
           disabled && styles.disabledLabel,
         ]}
       >
@@ -82,18 +92,10 @@ const MyDropdown = ({
         labelField="text"
         valueField="value"
         value={data.find((x) => x.value === value)}
-        onChange={(item) => {
-          setValue(item.value);
-        }}
+        onChange={(item) => setValue(item.value)}
         disable={disabled}
-        onFocus={() => {
-          setIsFocused(true);
-          borderColor.value = withTiming(colors.accent, { duration: 200 });
-        }}
-        onBlur={() => {
-          setIsFocused(false);
-          borderColor.value = withTiming("#444", { duration: 200 });
-        }}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
       />
     </Animated.View>
   );
@@ -102,81 +104,81 @@ const MyDropdown = ({
 const styles = StyleSheet.create({
   wrapper: {
     position: "relative",
-    borderRadius: 8,
+    borderRadius: 6,
     borderWidth: 1,
     overflow: "hidden",
-    minHeight: 56,
+    minHeight: 48,
   },
   dropdown: {
-    height: 56,
+    height: 48,
     borderWidth: 0,
-    paddingBottom: 8,
-    paddingTop: 28,
-    paddingHorizontal: 16,
+    paddingBottom: 6,
+    paddingTop: 22,
+    paddingHorizontal: 12,
     backgroundColor: "transparent",
   },
   disabledContainer: {
-    backgroundColor: "#222228",
-    borderColor: "#3A3A42",
+    backgroundColor: colors.disabledBackGround,
+    borderColor: colors.disabledBorder,
     opacity: 0.9,
   },
   label: {
     position: "absolute",
-    top: 8,
-    left: 16,
-    fontSize: 12,
+    top: 6,
+    left: 12,
+    fontSize: 10,
     fontWeight: "500",
-    color: "#9AA2B0",
+    color: colors.grayText,
     zIndex: 1,
   },
   focusedLabel: {
     color: colors.accent,
   },
   disabledLabel: {
-    color: "#666",
+    color: colors.readonly,
   },
   placeholderStyle: {
     fontFamily: "Inter",
-    fontSize: 14,
-    color: "#666",
+    fontSize: 12,
+    color: colors.placeHolder,
   },
   selectedTextStyle: {
     fontFamily: "Inter",
-    fontSize: 14,
-    color: "#FFFFFF",
+    fontSize: 12,
+    color: colors.white,
     overflow: "hidden",
   },
   disabledText: {
-    color: "#777",
+    color: colors.readonly,
   },
   item: {
-    paddingVertical: 10,
-    paddingHorizontal: 16,
-    color: "white",
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    color: colors.white,
   },
   selectedItem: {
     backgroundColor: colors.accent,
   },
   itemContainer: {
-    backgroundColor: "#2A2A32",
+    backgroundColor: colors.dark,
     borderWidth: 0,
-    borderRadius: 8,
+    borderRadius: 6,
     marginTop: 4,
   },
   itemTextStyle: {
-    fontSize: 14,
-    color: "white",
+    fontSize: 12,
+    color: colors.white,
     fontFamily: "Inter",
   },
   iconStyle: {
-    width: 20,
-    height: 20,
+    width: 16,
+    height: 16,
     marginRight: 4,
   },
   dropdownContainer: {
     borderWidth: 0,
-    borderRadius: 8,
-    backgroundColor: "#2A2A32",
+    borderRadius: 6,
+    backgroundColor: colors.dark,
   },
 });
 

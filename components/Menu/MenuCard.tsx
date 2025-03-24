@@ -23,8 +23,8 @@ const MenuCard = ({ title, icon, path = "/home", color }: MenuCardProps) => {
         router.push({ pathname: path as any, params: { title: title } })
       }
       style={{
-        height: 98,
-        borderRadius: 6,
+        height: 80,
+        borderRadius: 8,
         overflow: "hidden",
       }}
     >
@@ -67,7 +67,7 @@ const MenuCard = ({ title, icon, path = "/home", color }: MenuCardProps) => {
           <MyText
             style={{
               fontFamily: "Inter",
-              fontSize: 15,
+              fontSize: 12,
               color: "white",
               lineHeight: 18,
             }}

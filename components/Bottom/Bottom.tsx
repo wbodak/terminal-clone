@@ -4,6 +4,7 @@ import BottomButton from "./BottomButton";
 import { MyButtonProps } from "../Elements/MyButton";
 import { useGlobalContext } from "@/hooks/useGlobalContext";
 import MyText from "../Elements/MyText";
+import { colors } from "@/constants/Colors";
 
 export type BottomProps = {
   isApproved?: boolean;
@@ -81,7 +82,7 @@ const Bottom = ({
 
 const styles = StyleSheet.create({
   actionContainer: {
-    backgroundColor: "#132C1B",
+    backgroundColor: colors.cardBackground,
     paddingVertical: 6,
     paddingHorizontal: 16,
     borderTopWidth: 1,
@@ -95,7 +96,7 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   approvedContainer: {
-    backgroundColor: "#132C1B",
+    backgroundColor: colors.cardBackground,
     paddingVertical: 6,
     minHeight: 48,
     elevation: 8,
