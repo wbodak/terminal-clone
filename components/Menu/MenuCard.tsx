@@ -4,6 +4,7 @@ import * as React from "react";
 import { Dimensions, Image, View } from "react-native";
 import { Card } from "react-native-paper";
 import MyText from "../Elements/MyText";
+import { colors } from "@/constants/Colors";
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -68,7 +69,7 @@ const MenuCard = ({ title, icon, path = "/home", color }: MenuCardProps) => {
             style={{
               fontFamily: "Inter",
               fontSize: 12,
-              color: "white",
+              color: colors.white,
               lineHeight: 18,
             }}
           >

@@ -98,9 +98,9 @@ const Layout = ({
           {children}
         </ScrollView>
       ) : (
-        <View>
+        <View style={{ flex: 1 }}>
           {hasHeader && showSubTitle && (
-            <>
+            <View>
               <MyText style={{ fontSize: 12, paddingHorizontal: 16 }}>
                 {headerTitle} Bilgileri
               </MyText>
@@ -113,7 +113,7 @@ const Layout = ({
                   backgroundColor: "#313236",
                 }}
               />
-            </>
+            </View>
           )}
           {children}
         </View>

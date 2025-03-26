@@ -4,6 +4,7 @@ import { View, StyleSheet, ScrollView } from "react-native";
 import { DetailMenuItem, MenuItem } from "@/types/dtos/MenuItem";
 import { icons } from "@/assets/icons";
 import MyText from "../Elements/MyText";
+import { colors } from "@/constants/Colors";
 
 type Props = {
   data: MenuItem[];
@@ -11,7 +12,7 @@ type Props = {
 
 const MenuCardList = ({ data }: Props) => {
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView>
       {data.map((menuItem, index) => (
         <View key={index}>
           <MyText style={styles.menuTitle}>{menuItem.name}</MyText>
@@ -39,12 +40,9 @@ const MenuCardList = ({ data }: Props) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 8,
-  },
   menuTitle: {
     borderBottomWidth: 1,
-    borderColor: "#313236",
+    borderColor: colors.border,
     paddingBottom: 4,
     fontSize: 12,
   },
