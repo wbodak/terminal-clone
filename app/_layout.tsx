@@ -98,6 +98,14 @@ export default function RootLayout() {
             name="materialOutput-detail"
             options={{ headerShown: false, animation: "slide_from_bottom" }}
           />
+          <Stack.Screen
+            name="Waste/waste"
+            options={{ headerShown: false, animation: "slide_from_bottom" }}
+          />
+          <Stack.Screen
+            name="Waste/waste-detail"
+            options={{ headerShown: false, animation: "slide_from_bottom" }}
+          />
           <Stack.Screen name="+not-found" />
         </Stack>
       </View>
