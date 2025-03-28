@@ -5,7 +5,6 @@ import CountDetailBarcodeHistory from "@/components/BarcodeHistory/CountDetailBa
 
 const BarcodeHistory = () => {
   const data = useLocalSearchParams();
-  console.log("data", data);
   return data.type == "stock" ? (
     <StockDetailBarcodeHistory masterId={Number(data.masterId)} />
   ) : (

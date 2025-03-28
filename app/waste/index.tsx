@@ -58,7 +58,6 @@ const Waste = () => {
       return () => {}; // sayfadan çıktı
     }, [])
   );
-  console.log(wasteList[0], "wasteList");
   return (
     <Layout
       headerTitle={pageTitle.toString()}
@@ -98,7 +97,7 @@ const Waste = () => {
       />
       <MyDataGrid
         deletePath="/Stock/DeleteStockMaster"
-        editPage={"Waste/waste-detail"}
+        editPage={"/waste/detail"}
         columns={[
           {
             dataField: "STOCKMASTER_NUMBER",

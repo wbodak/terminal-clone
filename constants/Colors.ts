@@ -19,4 +19,6 @@ export const colors = {
   dark : "#2A2A32",
   disabledBackGround: "#2A2A32",
   disabledBorder: "#3A3A42",
+  success : '#59b259',
+  error : '#F44336',
 };

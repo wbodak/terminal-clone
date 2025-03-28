@@ -21,7 +21,10 @@ const MenuCard = ({ title, icon, path = "/home", color }: MenuCardProps) => {
   return (
     <Card
       onPress={() =>
-        router.push({ pathname: path as any, params: { title: title } })
+        router.push({
+          pathname: `${path}` as any,
+          params: { title: title },
+        })
       }
       style={{
         height: 80,

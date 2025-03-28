@@ -15,7 +15,6 @@ const StockDetailBarcodeHistory = ({ masterId }: Props) => {
   const { axiosGet } = useAxios();
 
   const [history, setHistory] = useState<V_StockDetail[]>([]);
-  const [tabIndex, steTabIndex] = useState(0);
 
   useEffect(() => {
     axiosGet({

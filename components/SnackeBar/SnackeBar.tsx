@@ -1,32 +1,40 @@
 import React, { forwardRef, useImperativeHandle, useState } from "react";
-import { Icon, Snackbar } from "react-native-paper";
+import { Snackbar } from "react-native-paper";
+import Animated, {
+  useAnimatedStyle,
+  withSpring,
+  withTiming,
+} from "react-native-reanimated";
 import data from "./data.json";
-import { StyleSheet, View } from "react-native";
-import MyText from "../Elements/MyText";
 import { colors } from "@/constants/Colors";
-
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import MyText from "../Elements/MyText";
+import { View } from "react-native";
 export type CustomAlertProps = {
-  message?: string;
-  title?: string;
   dialogName: string;
-  accept?: () => void;
-  cancel?: () => void;
+  message?: string;
 };
 
 type AlertModel = {
   type: "success" | "error" | "question";
   name: string;
-  language: string;
-  title: string;
   message: string;
 };
 
-const SnackeBar = (props: any, ref: any) => {
+const CustomSnackbar = forwardRef((props, ref) => {
   const [visible, setVisible] = useState(false);
   const [isSuccess, setIsSuccess] = useState(true);
   const [text, setText] = useState("");
 
-  const onDismissSnackBar = () => setVisible(false);
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [
+      {
+        translateY: withSpring(visible ? 0 : -100, { damping: 12 }),
+      },
+    ],
+    opacity: withTiming(visible ? 1 : 0, { duration: 300 }),
+  }));
 
   useImperativeHandle(
     ref,
@@ -35,43 +43,55 @@ const SnackeBar = (props: any, ref: any) => {
         const selectedAlert = data.find(
           (alert) => alert.name === dialogName
         ) as AlertModel | undefined;
-        setVisible(true);
+
         setText(message || selectedAlert?.message || "");
         setIsSuccess(selectedAlert?.type === "success");
+        setVisible(true);
+
+        // Auto-dismiss after 3 seconds
+        setTimeout(() => setVisible(false), 3000);
       },
     }),
     []
   );
 
   return (
-    <Snackbar
-      visible={visible}
-      onDismiss={onDismissSnackBar}
-      duration={3000}
-      icon={"check"}
+    <Animated.View
+      style={[
+        {
+          position: "absolute",
+          top: 100,
+          right: 16,
+          width: "90%",
+          zIndex: 1000,
+        },
+        animatedStyle,
+      ]}
     >
-      <View style={styles.container}>
-        <MyText style={styles.text}>{text}</MyText>
-        <Icon
-          size={28}
-          source={isSuccess ? "check" : "close"}
-          color={isSuccess ? "green" : "red"}
-        />
-      </View>
-    </Snackbar>
+      <Snackbar
+        visible={visible}
+        onDismiss={() => setVisible(false)}
+        style={{
+          backgroundColor: isSuccess ? colors.success : colors.error,
+        }}
+        action={{
+          label: "",
+          icon: "close",
+          color: colors.white,
+          onPress: () => setVisible(false),
+        }}
+      >
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+          {isSuccess ? (
+            <AntDesign name="checkcircle" size={24} color="white" />
+          ) : (
+            <MaterialIcons name="cancel" size={24} color="white" />
+          )}
+          <MyText>{text}</MyText>
+        </View>
+      </Snackbar>
+    </Animated.View>
   );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  text: {
-    color: colors.white,
-  },
 });
 
-export default forwardRef(SnackeBar);
+export default CustomSnackbar;

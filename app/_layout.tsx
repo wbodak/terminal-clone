@@ -99,11 +99,11 @@ export default function RootLayout() {
             options={{ headerShown: false, animation: "slide_from_bottom" }}
           />
           <Stack.Screen
-            name="Waste/waste"
+            name="waste/index"
             options={{ headerShown: false, animation: "slide_from_bottom" }}
           />
           <Stack.Screen
-            name="Waste/waste-detail"
+            name="waste/detail"
             options={{ headerShown: false, animation: "slide_from_bottom" }}
           />
           <Stack.Screen name="+not-found" />

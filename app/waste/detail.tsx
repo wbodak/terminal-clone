@@ -55,17 +55,31 @@ const WasteDetail = () => {
   };
   const isNewRecord = warehouse?.STOCKDETAIL_REGUSER_ID == 0;
 
+  const getWareHouse = () => {
+    axiosGet({
+      path: `/Stock/GetStockDetail?barcode=${warehouse?.STOCKDETAIL_BARCODE_ID}&stockMasterId=${masterId}`,
+      success: (data: V_StockDetail) => {
+        setWarehouse({ ...warehouse, ...data });
+      },
+      error: () => {
+        handleUpdateState("STOCKDETAIL_BARCODE_ID", undefined);
+      },
+    });
+  };
   return (
     <Layout
-      headerTitle="Raf Transferi Detayı"
+      headerTitle="Fire Detayı"
       showSubTitle={false}
       bottomProps={{
         isApproved: isApproved,
         saveProps: {
-          disabled: !isNewRecord || !warehouse?.STOCKDETAIL_BARCODE_ID,
+          disabled: !warehouse?.STOCKDETAIL_BARCODE_ID,
           onPress: async () => {
             axiosPost({
               path: `/Stock/CreateStockDetailForWaste?barcode=${warehouse?.STOCKDETAIL_BARCODE_ID}&quantity=${warehouse?.STOCKDETAIL_QUANTITY}&stockMasterId=${masterId}&piece=${warehouse?.STOCKDETAIL_PIECE}`,
+              success: () => {
+                getWareHouse();
+              },
             });
           },
         },
@@ -80,10 +94,14 @@ const WasteDetail = () => {
             if (warehouse?.ID)
               axiosDelete({
                 path: `/Stock/DeleteStockDetailForWaste/${warehouse?.ID}`,
+                success: () => {
+                  setWarehouse(undefined);
+                },
               });
           },
         },
         approveProps: {
+          disabled: warehouse?.STOCKDETAIL_REGUSER_ID == 0 ? false : true,
           onPress: () => {
             axiosPatch({
               path: `/Stock/ConfirmStockMaster?id=${masterId}&value=true`,
@@ -94,6 +112,7 @@ const WasteDetail = () => {
           },
         },
         approveCancelProps: {
+          disabled: warehouse?.STOCKDETAIL_REGUSER_ID == 0 ? true : false,
           onPress: () => {
             axiosPatch({
               path: `/Stock/ConfirmStockMaster?id=${masterId}&value=false`,
@@ -126,15 +145,7 @@ const WasteDetail = () => {
           }
           onSearchButton={() => {
             if (warehouse?.STOCKDETAIL_BARCODE_ID) {
-              axiosGet({
-                path: `/Stock/GetStockDetail?barcode=${warehouse.STOCKDETAIL_BARCODE_ID}&stockMasterId=${masterId}`,
-                success: (data: V_StockDetail) => {
-                  setWarehouse({ ...warehouse, ...data });
-                },
-                error: () => {
-                  handleUpdateState("STOCKDETAIL_BARCODE_ID", undefined);
-                },
-              });
+              getWareHouse();
             }
           }}
         />
@@ -224,16 +235,15 @@ const WasteDetail = () => {
             {!!warehouse?.STOCKDETAIL_PIECETRACKING && (
               <MyNumberInput
                 label={"Adet"}
-                onChangeText={(text: string) => {
+                onChangeText={(value: string) => {
                   setWarehouse({
                     ...warehouse,
-                    STOCKDETAIL_PIECE: text as any,
+                    STOCKDETAIL_PIECE: value as any,
                     STOCKDETAIL_QUANTITY: onPieceChanged(
-                      text,
-                      warehouse.STOCKDETAIL_LENGTH,
-                      warehouse.STOCKDETAIL_GRAMMAGE || 0
+                      Number(value),
+                      warehouse
                     ),
-                  } as V_StockDetail);
+                  });
                 }}
                 returnKeyType="next"
                 containerStyle={styles.flex1}
@@ -253,29 +263,14 @@ const WasteDetail = () => {
         )}
         <View style={styles.row}>
           <MyInput
-            label={"Lot Numarası"}
-            readOnly
-            returnKeyType="next"
-            containerStyle={styles.flex1}
-            value={warehouse?.STOCKDETAIL_LOTNUMBER}
-          />
-          <MyInput
             label={"Durum"}
             readOnly
             returnKeyType="next"
             containerStyle={styles.flex1}
             value={warehouse?.STOCKDETAIL_STATENAME}
           />
-        </View>
-        <View style={styles.row}>
           <MyNumberInput
-            label={"Stok Miktarı"}
             readOnly
-            returnKeyType="next"
-            containerStyle={styles.flex1}
-            value={warehouse?.STOCKDETAIL_TOTALQUANTITY}
-          />
-          <MyNumberInput
             label={"Miktar"}
             returnKeyType="next"
             containerStyle={styles.flex1}
