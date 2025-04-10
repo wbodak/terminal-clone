@@ -5,6 +5,7 @@ export const icons = {
   storeTransfer: require('./storeTransfer.png') as ImageSourcePropType,
   rackTransfer: require('./rackTransfer.png') as ImageSourcePropType,
   counting: require('./counting.png') as ImageSourcePropType,
+  waste: require('./waste.png') as ImageSourcePropType,
   eye: require('./eye.png') as ImageSourcePropType,
   'eye-hide': require('./eye-hide.png') as ImageSourcePropType,
   'search-blue': require('./search-blue.png') as ImageSourcePropType,
