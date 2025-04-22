@@ -3,20 +3,7 @@
  * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
  */
 
-// export const bgColors = ['#4B2A25', '#19334C', '#2A4135', '#351455', '#645320']
-
-export const bgColors = [
-  '#5C2D91', // canlı mor
-  '#00796B', // tropikal koyu yeşil
-  '#C2185B', // canlı koyu pembe (güçlü vurgu)
-  // '#FF6F00', // sıcak amber turuncusu
-  '#0288D1', // açık mavi ama kontrastlı
-  '#7B1FA2', // koyu mor (öncekine göre daha parlak)
-  '#00695C', // koyu cam göbeği
-  '#D84315', // yanık turuncu/kiremit
-];
-
-
+export const bgColors = ['#4B2A25', '#19334C', '#2A4135', '#351455', '#645320']
 
 export const colors = {
   background: "#12263A",
