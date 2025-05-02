@@ -17,7 +17,6 @@ export type MenuCardProps = {
 
 const MenuCard = ({ title, icon, path = "/home", color }: MenuCardProps) => {
   const router = useRouter();
-  console.log("icon", icon);
 
   return (
     <Card

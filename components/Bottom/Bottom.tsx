@@ -14,6 +14,8 @@ export type BottomProps = {
   approveProps?: MyButtonProps;
   approveCancelProps?: MyButtonProps;
   historyProps?: MyButtonProps;
+  newProps?: MyButtonProps;
+  editProps?: MyButtonProps;
 };
 
 const Bottom = ({
@@ -24,6 +26,8 @@ const Bottom = ({
   approveProps,
   approveCancelProps,
   historyProps,
+  newProps,
+  editProps,
 }: BottomProps) => {
   const { showDialog } = useGlobalContext();
 
@@ -35,6 +39,12 @@ const Bottom = ({
         <View style={styles.buttonsRow}>
           {saveProps && (
             <BottomButton text="Kaydet" icon="save-blue" {...saveProps} />
+          )}
+          {newProps && (
+            <BottomButton text="Yeni" icon="plus-blue" {...newProps} />
+          )}
+          {editProps && (
+            <BottomButton text="Düzenle" icon="edit-blue" {...editProps} />
           )}
           {deleteProps && (
             <BottomButton

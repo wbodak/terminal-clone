@@ -12,6 +12,8 @@ export const icons = {
   cross: require('./cross.png') as ImageSourcePropType,
   'approve-blue': require('./approve-blue.png') as ImageSourcePropType,
   'save-blue': require('./save-blue.png') as ImageSourcePropType,
+  'plus-blue': require('./plus-blue.png') as ImageSourcePropType,
+  'edit-blue': require('./edit-blue.png') as ImageSourcePropType,
   'delete-blue': require('./delete-blue.png') as ImageSourcePropType,
   'clear-blue': require('./clear-blue.png') as ImageSourcePropType,
   'clear-circle-white': require('./clear-circle-white.png') as ImageSourcePropType,

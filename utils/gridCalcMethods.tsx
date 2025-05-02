@@ -7,7 +7,6 @@ export const onPieceChanged = (value: number, warehouse: V_StockDetail) => {
 
   let grammage = warehouse?.STOCKDETAIL_GRAMMAGE;
   if (!grammage) {
-    console.log("burdayız");
     grammage =
       (warehouse?.STOCKDETAIL_QUANTITY /
         ((length ?? 0) * warehouse?.STOCKDETAIL_PIECE)) *

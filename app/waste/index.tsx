@@ -2,20 +2,27 @@ import MyDataGrid from "@/components/DataGrid/MyDataGrid";
 import MyDropdown from "@/components/Elements/MyDropdown";
 import Layout from "@/components/Layout";
 import SectionTitle from "@/components/SectionTitle";
+import { GlobalContext } from "@/context/GlobalContext";
 import { useAxios } from "@/hooks/useAxiox";
+import { useGlobalContext } from "@/hooks/useGlobalContext";
 import { V_StockMaster } from "@/types/db/V_StockMaster";
 import { SelectBoxDto } from "@/types/dtos/SelectBoxDto";
 import { WebUserDto } from "@/types/dtos/WebUserDto";
 import { getDataFromStorage } from "@/utils/asyncStore";
 import { transformSelctBoxData } from "@/utils/helper";
-import { useFocusEffect, useLocalSearchParams } from "expo-router";
-import React, { useCallback, useEffect, useState } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
+import React, { useCallback, useContext, useEffect, useState } from "react";
+import { StyleSheet, View } from "react-native";
 
 const Waste = () => {
   // Hooks
   const { axiosGet, axiosPost } = useAxios();
   const { title: pageTitle } = useLocalSearchParams();
+  const { showDialog } = useGlobalContext();
+  const { axiosDelete } = useAxios();
+  const router = useRouter();
+  const { selectedRow } = useContext(GlobalContext);
+
   // States
   const [warehouseList, setWarehouseList] = useState<SelectBoxDto[]>([]);
   const [selectedWareHouseValue, setSelectedWareHouseValue] = useState<
@@ -64,19 +71,42 @@ const Waste = () => {
       headerDescription="Açıklama Girilecek"
       scrollEnabled={false}
       bottomProps={{
-        saveProps: {
+        clearProps: {
+          disabled: !selectedWareHouseValue,
+          onPress: () => {
+            setSelectedWareHouseValue(undefined);
+            setWasteList([]);
+          },
+        },
+        newProps: {
           disabled: !selectedWareHouseValue,
           onPress: async () => {
             axiosPost({
               path: `/Stock/CreateStockMasterForWaste?sourceStore=${selectedWareHouseValue}`,
+              success: () => {
+                getStoreTransfers();
+                router.push({
+                  pathname: "/waste/detail",
+                });
+              },
+            });
+          },
+        },
+        deleteProps: {
+          disabled: !selectedRow,
+          onPress: () => {
+            axiosDelete({
+              path: `/Stock/DeleteStockMaster/${selectedRow?.ID}`,
               success: getStoreTransfers,
             });
           },
         },
-        clearProps: {
+        editProps: {
+          disabled: !selectedRow,
           onPress: () => {
-            setSelectedWareHouseValue(undefined);
-            setWasteList([]);
+            router.push({
+              pathname: "/waste/detail",
+            });
           },
         },
       }}
@@ -96,8 +126,8 @@ const Waste = () => {
         title={`${pageTitle.toString()} Listesi ${formattedDate}`}
       />
       <MyDataGrid
-        deletePath="/Stock/DeleteStockMaster"
-        editPage={"/waste/detail"}
+        // deletePath="/Stock/DeleteStockMaster"
+        // editPage={"/waste/detail"}
         columns={[
           {
             dataField: "STOCKMASTER_NUMBER",
@@ -105,15 +135,6 @@ const Waste = () => {
             dataType: "number",
             width: 100,
           },
-          //   {
-          //     dataField: "STOCKMASTER_SECTIONNAME",
-          //     caption: "Şube",
-          //   },
-          //   {
-          //     dataField: "STOCKMASTER_SOURCESSTORENAME",
-          //     caption: "Depo",
-          //     dataType: "string",
-          //   },
           {
             dataField: "STOCKMASTER_CONFIRM",
             caption: "Onaylı",

@@ -1,5 +1,5 @@
 // ** React Imports
-import { createContext, ReactNode, useRef } from "react";
+import { createContext, ReactNode, useRef, useState } from "react";
 import Loading from "@/components/Loading";
 import SnackeBar, { CustomAlertProps } from "@/components/SnackeBar/SnackeBar";
 import MyDialog, { DialogProps } from "@/components/Dialog";
@@ -9,6 +9,8 @@ type GlobalValuesType = {
   startLoader: () => any;
   showSnackeBar: ({ dialogName, message }: CustomAlertProps) => void;
   showDialog: (dialog: DialogProps) => any;
+  selectedRow: any;
+  setSelectedRow: (value: any) => void;
 };
 
 // ** Defaults
@@ -17,9 +19,11 @@ const defaultProvider: GlobalValuesType = {
   startLoader: () => null,
   showSnackeBar: () => null,
   showDialog: () => null,
+  selectedRow: null,
+  setSelectedRow: () => null,
 };
 
-const GlobalContext = createContext(defaultProvider);
+const GlobalContext = createContext<GlobalValuesType>(defaultProvider);
 
 type Props = {
   children: ReactNode;
@@ -27,14 +31,15 @@ type Props = {
 
 const GlobalProvider = ({ children }: Props) => {
   const loadingRef = useRef() as any;
+  const snackbarRef = useRef() as any;
+  const dialogRef = useRef() as any;
+
+  const [selectedRow, setSelectedRow] = useState<any>(null);
+
   const startLoader = () => loadingRef?.current?.start();
   const stopLoader = () => loadingRef?.current?.stop();
-
-  const snackbarRef = useRef() as any;
   const showSnackeBar = (props: CustomAlertProps) =>
     snackbarRef?.current?.showSnackeBar(props);
-
-  const dialogRef = useRef() as any;
   const showDialog = (dialog: DialogProps) => dialogRef?.current?.show(dialog);
 
   const values = {
@@ -42,6 +47,8 @@ const GlobalProvider = ({ children }: Props) => {
     stopLoader,
     showSnackeBar,
     showDialog,
+    selectedRow,
+    setSelectedRow,
   };
 
   return (

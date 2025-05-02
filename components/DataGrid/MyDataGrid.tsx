@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   View,
   FlatList,
@@ -30,6 +30,8 @@ import {
 } from "react-native-gesture-handler";
 import Feather from "@expo/vector-icons/Feather";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import { saveDataToStorage } from "@/utils/asyncStore";
+import { GlobalContext } from "@/context/GlobalContext";
 type Column = {
   dataField: string;
   caption: string;
@@ -75,6 +77,7 @@ const MyDataGrid = ({
   const { showSnackeBar } = useGlobalContext();
   const [tableData, setTableData] = useState<any>(data.slice(0, 15));
   const [keyword, setKeyword] = useState("");
+  const { setSelectedRow } = useContext(GlobalContext);
 
   const [selectedItems, setSelectedItems] = useState<any[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
@@ -113,6 +116,12 @@ const MyDataGrid = ({
     }
   }, [keyword]);
 
+  useEffect(() => {
+    if (!multiple) {
+      setSelectedRow(selectedItems[0] ?? null);
+    }
+  }, [selectedItems]);
+
   const deleteRowFromState = (id: number) => {
     const filtredData = data.filter((item) => {
       return item.ID != id;
@@ -124,6 +133,7 @@ const MyDataGrid = ({
 
   useEffect(() => {
     setTableData(data.slice(0, 15));
+    setSelectedItems([]);
   }, [data]);
 
   const isSelected = (id: number) => {
